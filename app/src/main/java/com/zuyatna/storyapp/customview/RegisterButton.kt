@@ -9,7 +9,7 @@ import androidx.appcompat.widget.AppCompatButton
 import androidx.core.content.ContextCompat
 import com.zuyatna.storyapp.R
 
-class LoginButton : AppCompatButton {
+class RegisterButton : AppCompatButton {
     private lateinit var enableBackground: Drawable
     private lateinit var disableBackground: Drawable
     private var txtColor: Int = 0
@@ -35,7 +35,7 @@ class LoginButton : AppCompatButton {
         setTextColor(txtColor)
         textSize = 12f
         gravity = Gravity.CENTER
-        text = if (isEnabled) context.getString(R.string.login_fill) else context.getString(R.string.form_unfilled)
+        text = if (isEnabled) context.getString(R.string.register) else context.getString(R.string.form_unfilled)
     }
 
     private fun init() {

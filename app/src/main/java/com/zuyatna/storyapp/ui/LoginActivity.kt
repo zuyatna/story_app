@@ -2,6 +2,7 @@ package com.zuyatna.storyapp.ui
 
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -17,6 +18,10 @@ class LoginActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         supportActionBar?.hide()
+        binding.tvLoginRegister.setOnClickListener {
+            startActivity(Intent(this, RegisterActivity::class.java))
+        }
+
         playPropertyAnimation()
     }
 
@@ -25,8 +30,8 @@ class LoginActivity : AppCompatActivity() {
         val etEmail = ObjectAnimator.ofFloat(binding.etLoginEmail, View.ALPHA, 1f).setDuration(500)
         val etPassword = ObjectAnimator.ofFloat(binding.etLoginPassword, View.ALPHA, 1f).setDuration(500)
         val btLogin = ObjectAnimator.ofFloat(binding.btLogin, View.ALPHA, 1f).setDuration(500)
-        val tvHaveNotAccount = ObjectAnimator.ofFloat(binding.tvHaveNotAccount, View.ALPHA, 1f).setDuration(3000)
-        val tvRegister = ObjectAnimator.ofFloat(binding.tvLoginRegister, View.ALPHA, 1f).setDuration(3000)
+        val tvHaveNotAccount = ObjectAnimator.ofFloat(binding.tvHaveNotAccount, View.ALPHA, 1f).setDuration(4000)
+        val tvRegister = ObjectAnimator.ofFloat(binding.tvLoginRegister, View.ALPHA, 1f).setDuration(4000)
 
         AnimatorSet().apply {
             playSequentially(title, etEmail, etPassword, btLogin)
