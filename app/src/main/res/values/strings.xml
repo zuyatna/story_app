@@ -4,6 +4,9 @@
     <string name="login_fill">Login</string>
     <string name="login_unfilled">Fill The Form</string>
     <string name="hint_email">Email</string>
-    <string name="warning_login_email">*email must be correct</string>
+    <string name="warning_login_email">email must be correct</string>
+    <string name="warning_login_password">password must more than 6 characters</string>
     <string name="hint_password">Password</string>
+    <string name="do_not_have_an_account">Don\'t have an account?</string>
+    <string name="register">Register</string>
 </resources>

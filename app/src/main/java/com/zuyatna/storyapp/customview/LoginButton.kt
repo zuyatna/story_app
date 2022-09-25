@@ -35,7 +35,7 @@ class LoginButton : AppCompatButton {
         setTextColor(txtColor)
         textSize = 12f
         gravity = Gravity.CENTER
-        text = if (isEnabled) R.string.login_fill.toString() else R.string.login_unfilled.toString()
+        text = if (isEnabled) context.getString(R.string.login_fill) else context.getString(R.string.login_unfilled)
     }
 
     private fun init() {
