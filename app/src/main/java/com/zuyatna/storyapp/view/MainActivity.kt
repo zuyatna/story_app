@@ -1,4 +1,4 @@
-package com.zuyatna.storyapp.ui
+package com.zuyatna.storyapp.view
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

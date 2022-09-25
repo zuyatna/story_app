@@ -1,4 +1,4 @@
-package com.zuyatna.storyapp.ui
+package com.zuyatna.storyapp.view
 
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
