@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">Story App</string>
     <string name="story_app">Story App</string>
+    <string name="login_fill">Login</string>
+    <string name="login_unfilled">Fill The Form</string>
+    <string name="hint_email">Email</string>
+    <string name="warning_login_email">*email must be correct</string>
+    <string name="hint_password">Password</string>
 </resources>
