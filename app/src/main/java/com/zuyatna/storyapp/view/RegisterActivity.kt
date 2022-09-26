@@ -8,18 +8,31 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Patterns
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.coroutineScope
 import com.zuyatna.storyapp.R
 import com.zuyatna.storyapp.databinding.ActivityRegisterBinding
+import com.zuyatna.storyapp.model.register.Register
+import com.zuyatna.storyapp.service.ApiConfig
+import com.zuyatna.storyapp.utility.NetworkResult
+import com.zuyatna.storyapp.viewmodel.RegisterViewModel
+import com.zuyatna.storyapp.viewmodel.RegisterViewModelFactory
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 
 class RegisterActivity : AppCompatActivity() {
     private val binding: ActivityRegisterBinding by lazy {
         ActivityRegisterBinding.inflate(layoutInflater)
     }
 
-    var completeUsername = false
-    var completeEmail = false
-    var completePassword = false
+    private lateinit var registerViewModel: RegisterViewModel
+
+    private var completeUsername = false
+    private var completeEmail = false
+    private var completePassword = false
+    private var registerJob: Job = Job()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -80,6 +93,10 @@ class RegisterActivity : AppCompatActivity() {
                 setRegisterButtonEnable()
             }
         })
+
+        val register = Register(ApiConfig.getInstance())
+        registerViewModel = ViewModelProvider(this, RegisterViewModelFactory(register))[RegisterViewModel::class.java]
+        postRegisterForm()
     }
 
     private fun playPropertyAnimation() {
@@ -101,6 +118,33 @@ class RegisterActivity : AppCompatActivity() {
     private fun setRegisterButtonEnable() {
         val btRegister = binding.btRegister
         btRegister.isEnabled = !completeUsername && completeEmail && completePassword
+    }
+
+    private fun postRegisterForm() {
+        binding.apply {
+            btRegister.setOnClickListener {
+                val username = binding.etRegisterUsername.text.toString().trim()
+                val email = binding.etRegisterEmail.text.toString().trim()
+                val password = binding.etRegisterPassword.text.toString().trim()
+
+                lifecycle.coroutineScope.launchWhenResumed {
+                    registerJob = launch {
+                        registerViewModel.register(username, email, password).collect { result ->
+                            when (result) {
+                                is NetworkResult.Success -> {
+                                    startActivity(Intent(this@RegisterActivity, LoginActivity::class.java))
+                                    Toast.makeText(this@RegisterActivity, getString(R.string.successful_registered), Toast.LENGTH_SHORT).show()
+                                    finish()
+                                }
+                                is NetworkResult.Error -> {
+                                    Toast.makeText(this@RegisterActivity, getString(R.string.failed_registered), Toast.LENGTH_SHORT).show()
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {
