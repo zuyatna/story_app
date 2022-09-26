@@ -16,8 +16,8 @@ class LoginActivity : AppCompatActivity() {
         ActivityLoginBinding.inflate(layoutInflater)
     }
 
-    var completeEmail = false
-    var completePassword = false
+    private var completeEmail = false
+    private var completePassword = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -78,7 +78,14 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun setLoginButtonEnable() {
+        val etEmail = binding.etLoginEmail
+        val etPassword = binding.etLoginPassword
         val btLogin = binding.btLogin
-        btLogin.isEnabled = completeEmail && completePassword
+
+        if (etEmail.text.toString().isEmpty() && etPassword.text.toString().isEmpty()) {
+            btLogin.isEnabled = false
+        } else {
+            btLogin.isEnabled = completeEmail && completePassword
+        }
     }
 }

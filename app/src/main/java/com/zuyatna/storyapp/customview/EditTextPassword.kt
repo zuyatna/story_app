@@ -1,10 +1,12 @@
 package com.zuyatna.storyapp.customview
 
 import android.content.Context
+import android.graphics.Canvas
 import android.os.Build
 import android.text.Editable
 import android.text.InputType
 import android.text.TextWatcher
+import android.text.method.PasswordTransformationMethod
 import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatEditText
 import com.zuyatna.storyapp.R
@@ -48,5 +50,10 @@ class EditTextPassword : AppCompatEditText {
                 }
             }
         })
+    }
+
+    override fun onDraw(canvas: Canvas?) {
+        super.onDraw(canvas)
+        transformationMethod = PasswordTransformationMethod.getInstance()
     }
 }

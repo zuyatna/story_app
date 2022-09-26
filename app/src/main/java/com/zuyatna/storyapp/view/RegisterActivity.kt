@@ -14,7 +14,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.coroutineScope
 import com.zuyatna.storyapp.R
 import com.zuyatna.storyapp.databinding.ActivityRegisterBinding
-import com.zuyatna.storyapp.model.register.Register
+import com.zuyatna.storyapp.model.register.RegisterModel
 import com.zuyatna.storyapp.service.ApiConfig
 import com.zuyatna.storyapp.utility.NetworkResult
 import com.zuyatna.storyapp.viewmodel.RegisterViewModel
@@ -40,6 +40,10 @@ class RegisterActivity : AppCompatActivity() {
 
         supportActionBar?.title = resources.getString(R.string.register)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        val register = RegisterModel(ApiConfig.getInstance())
+        registerViewModel = ViewModelProvider(this, RegisterViewModelFactory(register))[RegisterViewModel::class.java]
+        postRegisterForm()
 
         binding.tvRegisterLogin.setOnClickListener {
             startActivity(Intent(this, LoginActivity::class.java))
@@ -93,10 +97,6 @@ class RegisterActivity : AppCompatActivity() {
                 setRegisterButtonEnable()
             }
         })
-
-        val register = Register(ApiConfig.getInstance())
-        registerViewModel = ViewModelProvider(this, RegisterViewModelFactory(register))[RegisterViewModel::class.java]
-        postRegisterForm()
     }
 
     private fun playPropertyAnimation() {
@@ -116,8 +116,16 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun setRegisterButtonEnable() {
+        val etUsername = binding.etRegisterUsername
+        val etEmail = binding.etRegisterEmail
+        val etPassword = binding.etRegisterPassword
         val btRegister = binding.btRegister
-        btRegister.isEnabled = !completeUsername && completeEmail && completePassword
+
+        if (etUsername.text.toString().isEmpty() && etEmail.text.toString().isEmpty() && etPassword.text.toString().isEmpty()) {
+            btRegister.isEnabled = false
+        } else {
+            btRegister.isEnabled = !completeUsername && completeEmail && completePassword
+        }
     }
 
     private fun postRegisterForm() {
@@ -128,6 +136,7 @@ class RegisterActivity : AppCompatActivity() {
                 val password = binding.etRegisterPassword.text.toString().trim()
 
                 lifecycle.coroutineScope.launchWhenResumed {
+                    if(registerJob.isActive) registerJob.cancel()
                     registerJob = launch {
                         registerViewModel.register(username, email, password).collect { result ->
                             when (result) {
