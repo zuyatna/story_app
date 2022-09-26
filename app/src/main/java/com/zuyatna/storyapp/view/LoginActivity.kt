@@ -8,25 +8,44 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Patterns
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.coroutineScope
+import com.zuyatna.storyapp.R
 import com.zuyatna.storyapp.databinding.ActivityLoginBinding
+import com.zuyatna.storyapp.model.login.LoginModel
+import com.zuyatna.storyapp.service.ApiConfig
+import com.zuyatna.storyapp.utility.NetworkResult
+import com.zuyatna.storyapp.viewmodel.LoginViewModel
+import com.zuyatna.storyapp.viewmodel.LoginViewModelFactory
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 
 class LoginActivity : AppCompatActivity() {
     private val binding: ActivityLoginBinding by lazy {
         ActivityLoginBinding.inflate(layoutInflater)
     }
 
+    private lateinit var loginViewModel: LoginViewModel
+
     private var completeEmail = false
     private var completePassword = false
+    private var registerJob: Job = Job()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
         supportActionBar?.hide()
+
         binding.tvLoginRegister.setOnClickListener {
             startActivity(Intent(this, RegisterActivity::class.java))
         }
+
+        val login = LoginModel(ApiConfig.getInstance())
+        loginViewModel = ViewModelProvider(this, LoginViewModelFactory(login))[LoginViewModel::class.java]
+        postLoginForm()
 
         playPropertyAnimation()
         setLoginButtonEnable()
@@ -86,6 +105,33 @@ class LoginActivity : AppCompatActivity() {
             btLogin.isEnabled = false
         } else {
             btLogin.isEnabled = completeEmail && completePassword
+        }
+    }
+
+    private fun postLoginForm() {
+        binding.apply {
+            btLogin.setOnClickListener {
+                val email = binding.etLoginEmail.text.toString().trim()
+                val password = binding.etLoginPassword.text.toString().trim()
+
+                lifecycle.coroutineScope.launchWhenResumed {
+                    if(registerJob.isActive) registerJob.cancel()
+                    registerJob = launch {
+                        loginViewModel.login(email, password).collect { result ->
+                            when (result) {
+                                is NetworkResult.Success -> {
+                                    startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+                                    Toast.makeText(this@LoginActivity, getString(R.string.successful_login), Toast.LENGTH_SHORT).show()
+                                    finish()
+                                }
+                                is NetworkResult.Error -> {
+                                    Toast.makeText(this@LoginActivity, getString(R.string.failed_login), Toast.LENGTH_SHORT).show()
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }

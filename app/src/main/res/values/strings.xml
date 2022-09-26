@@ -14,4 +14,6 @@
     <string name="already_have_an_account">Already have an account?</string>
     <string name="successful_registered">Account registered successfully</string>
     <string name="failed_registered">Registration failed</string>
+    <string name="successful_login">Login account</string>
+    <string name="failed_login">Login account failed</string>
 </resources>

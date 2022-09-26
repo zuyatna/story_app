@@ -21,6 +21,10 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField "String", "ENDPOINT",'"https://story-api.dicoding.dev/v1/"'
+        }
+        debug {
+            buildConfigField "String", "ENDPOINT",'"https://story-api.dicoding.dev/v1/"'
         }
     }
     compileOptions {

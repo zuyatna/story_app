@@ -1,12 +1,12 @@
 package com.zuyatna.storyapp.service
 
+import com.zuyatna.storyapp.BuildConfig
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object ApiConfig {
-    private const val SERVER_URL = "https://story-api.dicoding.dev/v1/"
 
     fun getInstance(): ApiService {
         val interceptor = HttpLoggingInterceptor()
@@ -15,7 +15,7 @@ object ApiConfig {
             .addInterceptor(interceptor)
             .build()
         val retrofit = Retrofit.Builder()
-            .baseUrl(SERVER_URL)
+            .baseUrl(BuildConfig.ENDPOINT)
             .addConverterFactory(GsonConverterFactory.create())
             .client(client)
             .build()
