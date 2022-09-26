@@ -22,6 +22,7 @@ import com.zuyatna.storyapp.viewmodel.RegisterViewModelFactory
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
+
 class RegisterActivity : AppCompatActivity() {
     private val binding: ActivityRegisterBinding by lazy {
         ActivityRegisterBinding.inflate(layoutInflater)
@@ -47,7 +48,6 @@ class RegisterActivity : AppCompatActivity() {
 
         binding.tvRegisterLogin.setOnClickListener {
             startActivity(Intent(this, LoginActivity::class.java))
-            finish()
         }
 
         playPropertyAnimation()
