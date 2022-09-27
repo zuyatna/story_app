@@ -1,10 +1,9 @@
 package com.zuyatna.storyapp.service
 
 import com.zuyatna.storyapp.model.login.ResponseLogin
+import com.zuyatna.storyapp.model.main.ResponseMain
 import com.zuyatna.storyapp.model.register.ResponseRegister
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
-import retrofit2.http.POST
+import retrofit2.http.*
 
 interface ApiService {
     @POST("register")
@@ -21,4 +20,9 @@ interface ApiService {
         @Field("email") email: String,
         @Field("password") password: String
     ): ResponseLogin
+
+    @GET("stories")
+    suspend fun getStories(
+        @Header("Authorization") auth: String
+    ): ResponseMain
 }

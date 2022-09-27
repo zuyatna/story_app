@@ -21,4 +21,8 @@
     <string name="add_story_button">Add Story Button</string>
     <string name="language">Language</string>
     <string name="log_out">Log out</string>
+    <string name="description">Description</string>
+    <string name="image_story">Image Story</string>
+    <string name="no_data_story">There\s no story</string>
+    <string name="error_data_story">Error when getting story</string>
 </resources>
