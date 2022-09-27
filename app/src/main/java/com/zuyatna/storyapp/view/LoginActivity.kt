@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.coroutineScope
 import com.zuyatna.storyapp.R
 import com.zuyatna.storyapp.databinding.ActivityLoginBinding
+import com.zuyatna.storyapp.manager.PreferenceManager
 import com.zuyatna.storyapp.model.login.LoginModel
 import com.zuyatna.storyapp.service.ApiConfig
 import com.zuyatna.storyapp.utility.NetworkResult
@@ -28,6 +29,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private lateinit var loginViewModel: LoginViewModel
+    private lateinit var preferenceManager: PreferenceManager
 
     private var completeEmail = false
     private var completePassword = false
@@ -47,6 +49,8 @@ class LoginActivity : AppCompatActivity() {
         val login = LoginModel(ApiConfig.getInstance())
         loginViewModel = ViewModelProvider(this, LoginViewModelFactory(login))[LoginViewModel::class.java]
         postLoginForm()
+
+        preferenceManager = PreferenceManager(this)
 
         playPropertyAnimation()
         setLoginButtonEnable()
@@ -129,6 +133,9 @@ class LoginActivity : AppCompatActivity() {
                         loginViewModel.login(email, password).collect { result ->
                             when (result) {
                                 is NetworkResult.Success -> {
+                                    preferenceManager.isUserLogin = !result.data?.error!!
+                                    preferenceManager.userToken = result.data.result.token
+
                                     startActivity(Intent(this@LoginActivity, MainActivity::class.java))
                                     Toast.makeText(this@LoginActivity, getString(R.string.successful_login), Toast.LENGTH_SHORT).show()
                                     finish()

@@ -9,20 +9,31 @@ import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.zuyatna.storyapp.R
+import com.zuyatna.storyapp.manager.PreferenceManager
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @SuppressLint("CustomSplashScreen")
 class SplashActivity : AppCompatActivity() {
+
+    private lateinit var preferenceManager: PreferenceManager
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
         setupView()
 
+        preferenceManager = PreferenceManager(this)
         lifecycleScope.launch {
             delay(2000)
-            val intent = Intent(this@SplashActivity, LoginActivity::class.java)
+
+            val intent = if (preferenceManager.isUserLogin) {
+                Intent(this@SplashActivity, MainActivity::class.java)
+            } else {
+                Intent(this@SplashActivity, LoginActivity::class.java)
+            }
+
             startActivity(intent)
             finish()
         }
