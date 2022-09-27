@@ -15,7 +15,7 @@ import androidx.lifecycle.coroutineScope
 import com.zuyatna.storyapp.R
 import com.zuyatna.storyapp.databinding.ActivityRegisterBinding
 import com.zuyatna.storyapp.model.register.RegisterModel
-import com.zuyatna.storyapp.service.ApiConfig
+import com.zuyatna.storyapp.api.ApiConfig
 import com.zuyatna.storyapp.utility.NetworkResult
 import com.zuyatna.storyapp.viewmodel.RegisterViewModel
 import com.zuyatna.storyapp.viewmodel.RegisterViewModelFactory

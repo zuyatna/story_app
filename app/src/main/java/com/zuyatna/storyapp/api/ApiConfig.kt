@@ -1,4 +1,4 @@
-package com.zuyatna.storyapp.service
+package com.zuyatna.storyapp.api
 
 import com.zuyatna.storyapp.BuildConfig
 import okhttp3.OkHttpClient

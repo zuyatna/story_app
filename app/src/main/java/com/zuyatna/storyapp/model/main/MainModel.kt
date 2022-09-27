@@ -1,7 +1,7 @@
 package com.zuyatna.storyapp.model.main
 
 import com.zuyatna.storyapp.model.user.UserAuth
-import com.zuyatna.storyapp.service.ApiService
+import com.zuyatna.storyapp.api.ApiService
 import com.zuyatna.storyapp.utility.NetworkResult
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow

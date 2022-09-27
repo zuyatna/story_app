@@ -16,7 +16,7 @@ import com.zuyatna.storyapp.databinding.ActivityMainBinding
 import com.zuyatna.storyapp.manager.PreferenceManager
 import com.zuyatna.storyapp.model.main.ListStory
 import com.zuyatna.storyapp.model.main.MainModel
-import com.zuyatna.storyapp.service.ApiConfig
+import com.zuyatna.storyapp.api.ApiConfig
 import com.zuyatna.storyapp.utility.NetworkResult
 import com.zuyatna.storyapp.viewmodel.MainViewModel
 import com.zuyatna.storyapp.viewmodel.MainViewModelFactory

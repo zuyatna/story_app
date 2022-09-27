@@ -16,7 +16,7 @@ import com.zuyatna.storyapp.R
 import com.zuyatna.storyapp.databinding.ActivityLoginBinding
 import com.zuyatna.storyapp.manager.PreferenceManager
 import com.zuyatna.storyapp.model.login.LoginModel
-import com.zuyatna.storyapp.service.ApiConfig
+import com.zuyatna.storyapp.api.ApiConfig
 import com.zuyatna.storyapp.utility.NetworkResult
 import com.zuyatna.storyapp.viewmodel.LoginViewModel
 import com.zuyatna.storyapp.viewmodel.LoginViewModelFactory
