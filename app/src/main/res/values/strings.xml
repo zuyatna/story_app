@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Story App</string>
     <string name="story_app">Story App</string>
-    <string name="register">Register</string>
+    <string name="register">Registration</string>
     <string name="login_fill">Login</string>
     <string name="form_unfilled">Fill The Form</string>
     <string name="hint_email">Email</string>
