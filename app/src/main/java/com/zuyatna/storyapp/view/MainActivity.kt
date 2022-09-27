@@ -10,13 +10,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityOptionsCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.zuyatna.storyapp.AddStoryActivity
 import com.zuyatna.storyapp.R
 import com.zuyatna.storyapp.adapter.MainAdapter
+import com.zuyatna.storyapp.api.ApiConfig
 import com.zuyatna.storyapp.databinding.ActivityMainBinding
 import com.zuyatna.storyapp.manager.PreferenceManager
 import com.zuyatna.storyapp.model.main.ListStory
 import com.zuyatna.storyapp.model.main.MainModel
-import com.zuyatna.storyapp.api.ApiConfig
 import com.zuyatna.storyapp.utility.NetworkResult
 import com.zuyatna.storyapp.viewmodel.MainViewModel
 import com.zuyatna.storyapp.viewmodel.MainViewModelFactory
@@ -44,6 +45,10 @@ class MainActivity : AppCompatActivity(), MainAdapter.OnItemClickAdapter {
         binding.srlMain.setOnRefreshListener {
             binding.srlMain.isRefreshing = true
             fetchData(preferenceManager.userToken)
+        }
+
+        binding.fabAddStory.setOnClickListener {
+            startActivity(Intent(this, AddStoryActivity::class.java))
         }
     }
 

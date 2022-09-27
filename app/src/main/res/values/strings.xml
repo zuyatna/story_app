@@ -28,4 +28,9 @@
     <string name="no_data_story">There\'s no story</string>
     <string name="error_data_story">Error when getting story</string>
     <string name="image_detail_story">Image Detail Story</string>
+    <string name="preview_photo_add_story">Preview photo add story</string>
+    <string name="camera">Camera</string>
+    <string name="gallery">Gallery</string>
+    <string name="what_s_your_story_today">What\'s your story today?</string>
+    <string name="upload">Upload</string>
 </resources>
