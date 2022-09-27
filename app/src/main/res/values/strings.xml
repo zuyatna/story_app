@@ -18,4 +18,7 @@
     <string name="failed_login">Login account failed</string>
     <string name="image_photo_login">image photo login</string>
     <string name="image_photo_register">image photo register</string>
+    <string name="add_story_button">Add Story Button</string>
+    <string name="language">Language</string>
+    <string name="log_out">Log out</string>
 </resources>
