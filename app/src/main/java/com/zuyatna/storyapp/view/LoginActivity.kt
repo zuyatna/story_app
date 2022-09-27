@@ -43,7 +43,6 @@ class LoginActivity : AppCompatActivity() {
 
         binding.tvLoginRegister.setOnClickListener {
             startActivity(Intent(this, RegisterActivity::class.java))
-            finish()
         }
 
         val login = LoginModel(ApiConfig.getInstance())

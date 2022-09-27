@@ -39,7 +39,7 @@ class RegisterActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        supportActionBar?.title = resources.getString(R.string.register)
+        supportActionBar?.title = resources.getString(R.string.registration)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         val register = RegisterModel(ApiConfig.getInstance())

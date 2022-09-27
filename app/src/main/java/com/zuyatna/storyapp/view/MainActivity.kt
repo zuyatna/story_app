@@ -42,6 +42,7 @@ class MainActivity : AppCompatActivity(), MainAdapter.OnItemClickAdapter {
         fetchData(preferenceManager.userToken)
 
         binding.srlMain.setOnRefreshListener {
+            binding.srlMain.isRefreshing = true
             fetchData(preferenceManager.userToken)
         }
     }
@@ -64,9 +65,12 @@ class MainActivity : AppCompatActivity(), MainAdapter.OnItemClickAdapter {
                         } else {
                             Toast.makeText(this@MainActivity, getString(R.string.no_data_story), Toast.LENGTH_SHORT).show()
                         }
+
+                        binding.srlMain.isRefreshing = false
                     }
                     is NetworkResult.Error -> {
                         Toast.makeText(this@MainActivity, getString(R.string.error_data_story), Toast.LENGTH_SHORT).show()
+                        binding.srlMain.isRefreshing = false
                     }
                 }
             }
@@ -93,6 +97,8 @@ class MainActivity : AppCompatActivity(), MainAdapter.OnItemClickAdapter {
     }
 
     override fun onItemClicked(listStory: ListStory, optionsCompat: ActivityOptionsCompat) {
-        //clicked item here..
+        val intent = Intent(this, DetailStoryActivity::class.java)
+        intent.putExtra(DetailStoryActivity.DETAIL_STORY, listStory)
+        startActivity(intent, optionsCompat.toBundle())
     }
 }

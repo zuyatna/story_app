@@ -1,10 +1,12 @@
 package com.zuyatna.storyapp.adapter
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.app.ActivityOptionsCompat
+import androidx.core.util.Pair
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.zuyatna.storyapp.databinding.CardItemStoryBinding
@@ -40,7 +42,15 @@ class MainAdapter(private val context: Context, private val clickListener: OnIte
                 Glide.with(context)
                     .load(listStory.photoUrl)
                     .into(ivCardPhoto)
-                //click listener here..
+                root.setOnClickListener {
+                    val optionsCompat: ActivityOptionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(context as Activity,
+                        Pair(binding.tvCardUsername, "name"),
+                        Pair(binding.tvCardDesc, "description"),
+                        Pair(binding.ivCardPhoto, "image")
+                    )
+
+                    clickListener.onItemClicked(listStory, optionsCompat)
+                }
             }
         }
     }

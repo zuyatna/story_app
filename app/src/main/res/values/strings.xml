@@ -1,7 +1,9 @@
 <resources>
     <string name="app_name">Story App</string>
     <string name="story_app">Story App</string>
-    <string name="register">Registration</string>
+    <string name="register">Register</string>
+    <string name="registration">Registration</string>
+    <string name="detail">Detail</string>
     <string name="login_fill">Login</string>
     <string name="form_unfilled">Fill The Form</string>
     <string name="hint_email">Email</string>
@@ -23,6 +25,7 @@
     <string name="log_out">Log out</string>
     <string name="description">Description</string>
     <string name="image_story">Image Story</string>
-    <string name="no_data_story">There\s no story</string>
+    <string name="no_data_story">There\'s no story</string>
     <string name="error_data_story">Error when getting story</string>
+    <string name="image_detail_story">Image Detail Story</string>
 </resources>
