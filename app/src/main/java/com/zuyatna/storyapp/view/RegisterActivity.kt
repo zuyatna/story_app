@@ -48,6 +48,7 @@ class RegisterActivity : AppCompatActivity() {
 
         binding.tvRegisterLogin.setOnClickListener {
             startActivity(Intent(this, LoginActivity::class.java))
+            finish()
         }
 
         playPropertyAnimation()
@@ -100,6 +101,12 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun playPropertyAnimation() {
+        ObjectAnimator.ofFloat(binding.ivRegister, View.TRANSLATION_X, -40f, 40f).apply {
+            duration = 5000
+            repeatCount = ObjectAnimator.INFINITE
+            repeatMode = ObjectAnimator.REVERSE
+        }.start()
+
         val title = ObjectAnimator.ofFloat(binding.tvRegisterTitle, View.ALPHA, 1f).setDuration(500)
         val etUsername = ObjectAnimator.ofFloat(binding.etRegisterUsername, View.ALPHA, 1f).setDuration(500)
         val etEmail = ObjectAnimator.ofFloat(binding.etRegisterEmail, View.ALPHA, 1f).setDuration(500)
@@ -135,6 +142,8 @@ class RegisterActivity : AppCompatActivity() {
                 val email = binding.etRegisterEmail.text.toString().trim()
                 val password = binding.etRegisterPassword.text.toString().trim()
 
+                setProgressBar(true)
+
                 lifecycle.coroutineScope.launchWhenResumed {
                     if(registerJob.isActive) registerJob.cancel()
                     registerJob = launch {
@@ -147,6 +156,7 @@ class RegisterActivity : AppCompatActivity() {
                                 }
                                 is NetworkResult.Error -> {
                                     Toast.makeText(this@RegisterActivity, getString(R.string.failed_registered), Toast.LENGTH_SHORT).show()
+                                    setProgressBar(false)
                                 }
                             }
                         }
@@ -159,5 +169,18 @@ class RegisterActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         finish()
         return super.onSupportNavigateUp()
+    }
+
+    private fun setProgressBar(loading: Boolean) {
+        when(loading) {
+            true -> {
+                binding.btRegister.visibility = View.GONE
+                binding.pbRegister.visibility = View.VISIBLE
+            }
+            false -> {
+                binding.btRegister.visibility = View.VISIBLE
+                binding.pbRegister.visibility = View.GONE
+            }
+        }
     }
 }

@@ -41,6 +41,7 @@ class LoginActivity : AppCompatActivity() {
 
         binding.tvLoginRegister.setOnClickListener {
             startActivity(Intent(this, RegisterActivity::class.java))
+            finish()
         }
 
         val login = LoginModel(ApiConfig.getInstance())
@@ -82,6 +83,12 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun playPropertyAnimation() {
+        ObjectAnimator.ofFloat(binding.ivLogin, View.TRANSLATION_X, -40f, 40f).apply {
+            duration = 5000
+            repeatCount = ObjectAnimator.INFINITE
+            repeatMode = ObjectAnimator.REVERSE
+        }.start()
+
         val title = ObjectAnimator.ofFloat(binding.tvLoginTitle, View.ALPHA, 1f).setDuration(500)
         val etEmail = ObjectAnimator.ofFloat(binding.etLoginEmail, View.ALPHA, 1f).setDuration(500)
         val etPassword = ObjectAnimator.ofFloat(binding.etLoginPassword, View.ALPHA, 1f).setDuration(500)
@@ -114,6 +121,8 @@ class LoginActivity : AppCompatActivity() {
                 val email = binding.etLoginEmail.text.toString().trim()
                 val password = binding.etLoginPassword.text.toString().trim()
 
+                setProgressBar(true)
+
                 lifecycle.coroutineScope.launchWhenResumed {
                     if(registerJob.isActive) registerJob.cancel()
                     registerJob = launch {
@@ -126,11 +135,25 @@ class LoginActivity : AppCompatActivity() {
                                 }
                                 is NetworkResult.Error -> {
                                     Toast.makeText(this@LoginActivity, getString(R.string.failed_login), Toast.LENGTH_SHORT).show()
+                                    setProgressBar(false)
                                 }
                             }
                         }
                     }
                 }
+            }
+        }
+    }
+
+    private fun setProgressBar(loading: Boolean) {
+        when(loading) {
+            true -> {
+                binding.btLogin.visibility = View.GONE
+                binding.pbLogin.visibility = View.VISIBLE
+            }
+            false -> {
+                binding.btLogin.visibility = View.VISIBLE
+                binding.pbLogin.visibility = View.GONE
             }
         }
     }

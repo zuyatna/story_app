@@ -16,4 +16,6 @@
     <string name="failed_registered">Registration failed</string>
     <string name="successful_login">Login account</string>
     <string name="failed_login">Login account failed</string>
+    <string name="image_photo_login">image photo login</string>
+    <string name="image_photo_register">image photo register</string>
 </resources>
