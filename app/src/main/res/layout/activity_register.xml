@@ -114,7 +114,7 @@
         android:alpha="0"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/tv_register_login_bt"
-        app:layout_constraintStart_toStartOf="@id/bt_register"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/bt_register"
         app:layout_constraintHorizontal_bias="0.43"
         app:layout_constraintVertical_bias="0.8" />
@@ -131,7 +131,7 @@
         android:textStyle="bold"
         android:alpha="0"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@id/bt_register"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/tv_have_account"
         app:layout_constraintTop_toBottomOf="@+id/bt_register"
         app:layout_constraintHorizontal_bias="0.035"

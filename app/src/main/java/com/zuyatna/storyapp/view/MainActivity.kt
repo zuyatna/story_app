@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.provider.Settings
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityOptionsCompat
@@ -59,6 +60,8 @@ class MainActivity : AppCompatActivity(), MainAdapter.OnItemClickAdapter {
         }
 
         mainViewModel.apply {
+            setProgressBar(true)
+
             fetchListStory(userAuth)
             dataListStory.observe(this@MainActivity) {
                 when (it) {
@@ -69,13 +72,30 @@ class MainActivity : AppCompatActivity(), MainAdapter.OnItemClickAdapter {
                             Toast.makeText(this@MainActivity, getString(R.string.no_data_story), Toast.LENGTH_SHORT).show()
                         }
 
+                        setProgressBar(false)
                         binding.srlMain.isRefreshing = false
                     }
                     is NetworkResult.Error -> {
+                        setProgressBar(false)
+
                         Toast.makeText(this@MainActivity, getString(R.string.error_data_story), Toast.LENGTH_SHORT).show()
                         binding.srlMain.isRefreshing = false
                     }
                 }
+            }
+        }
+    }
+
+
+    private fun setProgressBar(loading: Boolean) {
+        when(loading) {
+            true -> {
+                binding.rvMain.visibility = View.GONE
+                binding.pbMain.visibility = View.VISIBLE
+            }
+            false -> {
+                binding.rvMain.visibility = View.VISIBLE
+                binding.pbMain.visibility = View.GONE
             }
         }
     }
