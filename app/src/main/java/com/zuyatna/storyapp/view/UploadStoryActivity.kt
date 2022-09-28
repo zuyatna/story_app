@@ -12,8 +12,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
@@ -21,6 +19,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.coroutineScope
 import com.zuyatna.storyapp.R
@@ -101,19 +100,9 @@ class UploadStoryActivity : AppCompatActivity() {
             startGallery()
         }
 
-        binding.etUploadStoryDescription.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                //before text changed code here..
-            }
-
-            override fun afterTextChanged(s: Editable?) {
-                //after text changed code here..
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                isDescFilled = !s.isNullOrEmpty()
-                setUploadButtonEnable()
-            }
+        binding.etUploadStoryDescription.addTextChangedListener(onTextChanged = { s, _, _, _ ->
+            isDescFilled = !s.isNullOrEmpty()
+            setUploadButtonEnable()
         })
 
         binding.btUploadStoryUpload.setOnClickListener {

@@ -4,12 +4,11 @@ import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.content.Intent
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.Patterns
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.coroutineScope
 import com.zuyatna.storyapp.R
@@ -54,34 +53,14 @@ class LoginActivity : AppCompatActivity() {
         playPropertyAnimation()
         setLoginButtonEnable()
 
-        binding.etLoginEmail.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                //before text changed code here..
-            }
-
-            override fun afterTextChanged(s: Editable?) {
-                //after text changed code here..
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                completeEmail = !(!s.isNullOrEmpty() && !Patterns.EMAIL_ADDRESS.matcher(s).matches())
-                setLoginButtonEnable()
-            }
+        binding.etLoginEmail.addTextChangedListener(onTextChanged = { s, _, _, _ ->
+            completeEmail = !(!s.isNullOrEmpty() && !Patterns.EMAIL_ADDRESS.matcher(s).matches())
+            setLoginButtonEnable()
         })
 
-        binding.etLoginPassword.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                //before text changed code here..
-            }
-
-            override fun afterTextChanged(s: Editable?) {
-                //after text changed code here..
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                completePassword = !s.isNullOrEmpty()
-                setLoginButtonEnable()
-            }
+        binding.etLoginPassword.addTextChangedListener(onTextChanged = { s, _, _, _ ->
+            completePassword = !s.isNullOrEmpty() && s.length >= 6
+            setLoginButtonEnable()
         })
     }
 

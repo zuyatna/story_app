@@ -2,12 +2,11 @@ package com.zuyatna.storyapp.customview
 
 import android.content.Context
 import android.os.Build
-import android.text.Editable
 import android.text.InputType
-import android.text.TextWatcher
 import android.util.AttributeSet
 import android.util.Patterns
 import androidx.appcompat.widget.AppCompatEditText
+import androidx.core.widget.addTextChangedListener
 import com.zuyatna.storyapp.R
 
 class EditTextEmail: AppCompatEditText {
@@ -34,19 +33,9 @@ class EditTextEmail: AppCompatEditText {
             setAutofillHints(AUTOFILL_HINT_EMAIL_ADDRESS)
         }
 
-        addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                //before text changed code here..
-            }
-
-            override fun afterTextChanged(s: Editable?) {
-                //after text changed code here..
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if (!s.isNullOrEmpty() && !Patterns.EMAIL_ADDRESS.matcher(s).matches()) {
-                    error = context.getString(R.string.warning_login_email)
-                }
+        addTextChangedListener(onTextChanged = { s, _, _, _ ->
+            if (!s.isNullOrEmpty() && !Patterns.EMAIL_ADDRESS.matcher(s).matches()) {
+                error = context.getString(R.string.warning_login_email)
             }
         })
     }

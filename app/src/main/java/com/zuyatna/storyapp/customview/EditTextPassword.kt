@@ -3,12 +3,11 @@ package com.zuyatna.storyapp.customview
 import android.content.Context
 import android.graphics.Canvas
 import android.os.Build
-import android.text.Editable
 import android.text.InputType
-import android.text.TextWatcher
 import android.text.method.PasswordTransformationMethod
 import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatEditText
+import androidx.core.widget.addTextChangedListener
 import com.zuyatna.storyapp.R
 
 class EditTextPassword : AppCompatEditText {
@@ -35,19 +34,9 @@ class EditTextPassword : AppCompatEditText {
             setAutofillHints(AUTOFILL_HINT_PASSWORD)
         }
 
-        addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                //before text changed code here..
-            }
-
-            override fun afterTextChanged(s: Editable?) {
-                //after text changed code here..
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if (!s.isNullOrEmpty() && s.length < 6) {
-                    error = context.getString(R.string.warning_login_password)
-                }
+        addTextChangedListener(onTextChanged = { s, _, _, _ ->
+            if (!s.isNullOrEmpty() && s.length < 6) {
+                error = context.getString(R.string.warning_login_password)
             }
         })
     }
