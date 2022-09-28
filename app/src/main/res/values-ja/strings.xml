@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Story App</string>
+    <string name="story_app">Story App</string>
+    <string name="register">リスト</string>
+    <string name="registration">登録</string>
+    <string name="detail">詳細</string>
+    <string name="upload_story">ストーリーをアップロード</string>
+    <string name="upload">アップロード</string>
+    <string name="upload_file_warning">ファイルの説明を入力してください</string>
+    <string name="upload_file_error">ファイルアップロード時のエラー</string>
+    <string name="upload_file_successful">ファイルが正常にアップロードされました</string>
+    <string name="login_fill">ログイン</string>
+    <string name="form_unfilled">フォームに記入する</string>
+    <string name="camera">カメラ</string>
+    <string name="gallery">ギャラリー</string>
+    <string name="hint_email">Eメール</string>
+    <string name="hint_password">パスワード</string>
+    <string name="username">ユーザー名</string>
+    <string name="warning_login_email">電子メールは正しい必要があります</string>
+    <string name="warning_login_password">パスワードは 6 文字以上である必要があります</string>
+    <string name="do_not_have_an_account">アカウントをお持ちでない場合?</string>
+    <string name="already_have_an_account">すでにアカウントをお持ちですか？</string>
+    <string name="user_registration">ユーザー登録</string>
+    <string name="successful_registered">アカウントは正常に登録された</string>
+    <string name="failed_registered">登録に失敗しました</string>
+    <string name="successful_login">ログインアカウント</string>
+    <string name="failed_login">アカウントにログインできませんでした</string>
+    <string name="image_photo_login">Image photo login</string>
+    <string name="image_photo_register">Image photo register</string>
+    <string name="add_story_button">Add Story Button</string>
+    <string name="language">言語</string>
+    <string name="log_out">ログアウト</string>
+    <string name="description">説明</string>
+    <string name="image_story">Image Story</string>
+    <string name="no_data_story">話がない</string>
+    <string name="error_data_story">ストーリー取得時のエラー</string>
+    <string name="image_detail_story">Image Detail Story</string>
+    <string name="preview_photo_add_story">Preview photo add story</string>
+    <string name="what_s_your_story_today">今日のお話は？</string>
+    <string name="permission_denied">アクセス拒否</string>
+    <string name="choose_picture">写真を選ぶ</string>
+</resources>

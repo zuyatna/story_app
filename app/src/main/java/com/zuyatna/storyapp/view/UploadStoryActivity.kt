@@ -67,7 +67,7 @@ class UploadStoryActivity : AppCompatActivity() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == REQUEST_CODE_PERMISSIONS) {
             if (!allPermissionsGranted()) {
-                Toast.makeText(this, getString(R.string.permission_not_allowed), Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.permission_denied), Toast.LENGTH_SHORT).show()
                 finish()
             }
         }
@@ -152,7 +152,7 @@ class UploadStoryActivity : AppCompatActivity() {
         intent.action = Intent.ACTION_GET_CONTENT
         intent.type = "image/*"
 
-        val chooser = Intent.createChooser(intent, "Choose a Picture")
+        val chooser = Intent.createChooser(intent, getString(R.string.choose_picture))
         launcherIntentGallery.launch(chooser)
     }
 

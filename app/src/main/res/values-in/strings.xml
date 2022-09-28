@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Story App</string>
+    <string name="story_app">Story App</string>
+    <string name="register">Daftar</string>
+    <string name="registration">Registrasi</string>
+    <string name="detail">Detail</string>
+    <string name="upload_story">Unggah cerita</string>
+    <string name="upload">Unggah</string>
+    <string name="upload_file_warning">Tolong beri deskripsi pada file</string>
+    <string name="upload_file_error">Kesalahan saat mengunggah file</string>
+    <string name="upload_file_successful">Berkas berhasil diunggah</string>
+    <string name="login_fill">Masuk</string>
+    <string name="form_unfilled">Isi formulir</string>
+    <string name="camera">Kamera</string>
+    <string name="gallery">Galeri</string>
+    <string name="hint_email">Email</string>
+    <string name="hint_password">Password</string>
+    <string name="username">Username</string>
+    <string name="warning_login_email">Email harus benar</string>
+    <string name="warning_login_password">Password harus lebih dari 6 karakter</string>
+    <string name="do_not_have_an_account">Tidak punya akun?</string>
+    <string name="already_have_an_account">Sudah memiliki akun?</string>
+    <string name="user_registration">Pendaftaran pengguna</string>
+    <string name="successful_registered">Akun berhasil didaftarkan</string>
+    <string name="failed_registered">Registrasi gagal</string>
+    <string name="successful_login">Masuk akun</string>
+    <string name="failed_login">Masuk akun gagal</string>
+    <string name="image_photo_login">Image photo login</string>
+    <string name="image_photo_register">Image photo register</string>
+    <string name="add_story_button">Add Story Button</string>
+    <string name="language">Bahasa</string>
+    <string name="log_out">Keluar</string>
+    <string name="description">Deskripsi</string>
+    <string name="image_story">Image Story</string>
+    <string name="no_data_story">Tidak ada cerita</string>
+    <string name="error_data_story">Kesalahan saat mendapatkan cerita</string>
+    <string name="image_detail_story">Image Detail Story</string>
+    <string name="preview_photo_add_story">Preview photo add story</string>
+    <string name="what_s_your_story_today">Apa ceritamu hari ini?</string>
+    <string name="permission_denied">Izin ditolak</string>
+    <string name="choose_picture">Pilih gambar</string>
+</resources>

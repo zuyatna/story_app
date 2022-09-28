@@ -4,7 +4,7 @@
     <string name="register">Register</string>
     <string name="registration">Registration</string>
     <string name="detail">Detail</string>
-    <string name="upload_story">Upload Story</string>
+    <string name="upload_story">Upload story</string>
     <string name="upload">Upload</string>
     <string name="upload_file_warning">Please give a description on the file</string>
     <string name="upload_file_error">Error when upload file</string>
@@ -16,8 +16,8 @@
     <string name="hint_email">Email</string>
     <string name="hint_password">Password</string>
     <string name="username">Username</string>
-    <string name="warning_login_email">email must be correct</string>
-    <string name="warning_login_password">password must more than 6 characters</string>
+    <string name="warning_login_email">Email must be correct</string>
+    <string name="warning_login_password">Password must more than 6 characters</string>
     <string name="do_not_have_an_account">Don\'t have an account?</string>
     <string name="user_registration">User Registration</string>
     <string name="already_have_an_account">Already have an account?</string>
@@ -25,8 +25,8 @@
     <string name="failed_registered">Registration failed</string>
     <string name="successful_login">Login account</string>
     <string name="failed_login">Login account failed</string>
-    <string name="image_photo_login">image photo login</string>
-    <string name="image_photo_register">image photo register</string>
+    <string name="image_photo_login">Image photo login</string>
+    <string name="image_photo_register">Image photo register</string>
     <string name="add_story_button">Add Story Button</string>
     <string name="language">Language</string>
     <string name="log_out">Log out</string>
@@ -37,5 +37,6 @@
     <string name="image_detail_story">Image Detail Story</string>
     <string name="preview_photo_add_story">Preview photo add story</string>
     <string name="what_s_your_story_today">What\'s your story today?</string>
-    <string name="permission_not_allowed">Permission not allowed</string>
+    <string name="permission_denied">Permission denied</string>
+    <string name="choose_picture">Choose a picture</string>
 </resources>
