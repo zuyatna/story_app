@@ -1,6 +1,5 @@
 package com.zuyatna.storyapp.adapter
 
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.view.LayoutInflater
@@ -27,7 +26,6 @@ class MainAdapter(private val context: Context, private val clickListener: OnIte
 
     override fun getItemCount(): Int = listStory.size
 
-    @SuppressLint("NotifyDataSetChanged")
     fun setStory(list: List<ListStory>) {
         listStory.clear()
         listStory.addAll(list)

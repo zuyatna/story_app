@@ -6,7 +6,6 @@
     <string name="detail">Detail</string>
     <string name="upload_story">Upload story</string>
     <string name="upload">Upload</string>
-    <string name="upload_file_warning">Please give a description on the file</string>
     <string name="upload_file_error">Error when upload file</string>
     <string name="upload_file_successful">File uploaded successfully</string>
     <string name="login_fill">Login</string>

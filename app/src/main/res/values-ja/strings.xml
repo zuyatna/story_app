@@ -7,7 +7,6 @@
     <string name="detail">詳細</string>
     <string name="upload_story">ストーリーをアップロード</string>
     <string name="upload">アップロード</string>
-    <string name="upload_file_warning">ファイルの説明を入力してください</string>
     <string name="upload_file_error">ファイルアップロード時のエラー</string>
     <string name="upload_file_successful">ファイルが正常にアップロードされました</string>
     <string name="login_fill">ログイン</string>

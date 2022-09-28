@@ -7,7 +7,6 @@
     <string name="detail">Detail</string>
     <string name="upload_story">Unggah cerita</string>
     <string name="upload">Unggah</string>
-    <string name="upload_file_warning">Tolong beri deskripsi pada file</string>
     <string name="upload_file_error">Kesalahan saat mengunggah file</string>
     <string name="upload_file_successful">Berkas berhasil diunggah</string>
     <string name="login_fill">Masuk</string>
