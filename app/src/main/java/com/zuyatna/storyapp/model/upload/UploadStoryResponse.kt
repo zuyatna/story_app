@@ -1,8 +1,8 @@
-package com.zuyatna.storyapp.model.register
+package com.zuyatna.storyapp.model.upload
 
 import com.google.gson.annotations.SerializedName
 
-data class ResponseRegister(
+data class UploadStoryResponse(
     @field:SerializedName("error")
     val error: Boolean,
 

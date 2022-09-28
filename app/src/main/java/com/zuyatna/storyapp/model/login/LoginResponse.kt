@@ -2,7 +2,7 @@ package com.zuyatna.storyapp.model.login
 
 import com.google.gson.annotations.SerializedName
 
-data class ResponseLogin(
+data class LoginResponse(
     @field:SerializedName("error")
     val error: Boolean,
 

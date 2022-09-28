@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 
 class LoginModel constructor(private val apiService: ApiService) {
-    suspend fun loginUser(email: String, password: String): Flow<NetworkResult<ResponseLogin>> = flow {
+    suspend fun loginUser(email: String, password: String): Flow<NetworkResult<LoginResponse>> = flow {
         try {
             val service = apiService.login(email, password)
             emit(NetworkResult.Success(service))

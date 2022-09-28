@@ -4,7 +4,7 @@ import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
-data class ResponseMain(
+data class MainResponse(
     @field:SerializedName("error")
     val error: Boolean,
 

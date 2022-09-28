@@ -10,7 +10,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityOptionsCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.zuyatna.storyapp.AddStoryActivity
 import com.zuyatna.storyapp.R
 import com.zuyatna.storyapp.adapter.MainAdapter
 import com.zuyatna.storyapp.api.ApiConfig
@@ -48,10 +47,9 @@ class MainActivity : AppCompatActivity(), MainAdapter.OnItemClickAdapter {
         }
 
         binding.fabAddStory.setOnClickListener {
-            startActivity(Intent(this, AddStoryActivity::class.java))
+            startActivity(Intent(this, UploadStoryActivity::class.java))
         }
     }
-
 
     private fun fetchData(userAuth: String) {
         binding.rvMain.apply {

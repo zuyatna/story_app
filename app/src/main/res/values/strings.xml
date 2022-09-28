@@ -4,8 +4,15 @@
     <string name="register">Register</string>
     <string name="registration">Registration</string>
     <string name="detail">Detail</string>
+    <string name="upload_story">Upload Story</string>
+    <string name="upload">Upload</string>
+    <string name="upload_file_warning">Please give a description on the file</string>
+    <string name="upload_file_error">Error when upload file</string>
+    <string name="upload_file_successful">File uploaded successfully</string>
     <string name="login_fill">Login</string>
-    <string name="form_unfilled">Fill The Form</string>
+    <string name="form_unfilled">Fill the form</string>
+    <string name="camera">Camera</string>
+    <string name="gallery">Gallery</string>
     <string name="hint_email">Email</string>
     <string name="hint_password">Password</string>
     <string name="username">Username</string>
@@ -29,8 +36,6 @@
     <string name="error_data_story">Error when getting story</string>
     <string name="image_detail_story">Image Detail Story</string>
     <string name="preview_photo_add_story">Preview photo add story</string>
-    <string name="camera">Camera</string>
-    <string name="gallery">Gallery</string>
     <string name="what_s_your_story_today">What\'s your story today?</string>
-    <string name="upload">Upload</string>
+    <string name="permission_not_allowed">Permission not allowed</string>
 </resources>
