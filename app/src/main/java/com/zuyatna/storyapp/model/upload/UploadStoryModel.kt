@@ -18,7 +18,7 @@ import java.io.File
 class UploadStoryModel constructor(private val apiService: ApiService) {
     suspend fun uploadStory(userAuth: String, description: String, file: File) : Flow<NetworkResult<UploadStoryResponse>> = flow {
         try {
-            val generateToken = UserAuth.generateAuthorization(userAuth)
+            val generateToken = UserAuth.generateUserAuthorization(userAuth)
             val desc = description.toRequestBody("text/plain".toMediaType())
             val requestImageFile = file.asRequestBody("image/jpg".toMediaTypeOrNull())
             val imageMultipart = MultipartBody.Part.createFormData(

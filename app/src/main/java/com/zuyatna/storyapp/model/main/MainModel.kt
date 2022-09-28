@@ -12,7 +12,7 @@ import retrofit2.HttpException
 class MainModel constructor(private val apiService: ApiService) {
     suspend fun getStories(userAuth: String) : Flow<NetworkResult<MainResponse>> = flow {
         try {
-            val generateToken = UserAuth.generateAuthorization(userAuth)
+            val generateToken = UserAuth.generateUserAuthorization(userAuth)
             val service = apiService.getStories(generateToken)
             emit(NetworkResult.Success(service))
         } catch (e : Exception) {

@@ -86,7 +86,6 @@ class MainActivity : AppCompatActivity(), MainAdapter.OnItemClickAdapter {
         }
     }
 
-
     private fun setProgressBar(loading: Boolean) {
         when(loading) {
             true -> {

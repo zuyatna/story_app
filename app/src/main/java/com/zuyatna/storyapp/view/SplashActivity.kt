@@ -49,6 +49,7 @@ class SplashActivity : AppCompatActivity() {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN
             )
         }
+
         supportActionBar?.hide()
     }
 }
