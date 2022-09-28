@@ -40,4 +40,5 @@
     <string name="what_s_your_story_today">Apa ceritamu hari ini?</string>
     <string name="permission_denied">Izin ditolak</string>
     <string name="choose_picture">Pilih gambar</string>
+    <string name="add_desc_and_take_photo">Tambahkan deskripsi dan ambil foto</string>
 </resources>

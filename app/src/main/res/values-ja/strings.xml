@@ -40,4 +40,5 @@
     <string name="what_s_your_story_today">今日のお話は？</string>
     <string name="permission_denied">アクセス拒否</string>
     <string name="choose_picture">写真を選ぶ</string>
+    <string name="add_desc_and_take_photo">説明を追加して写真を撮る</string>
 </resources>

@@ -13,10 +13,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.coroutineScope
 import com.zuyatna.storyapp.R
+import com.zuyatna.storyapp.api.ApiConfig
 import com.zuyatna.storyapp.databinding.ActivityLoginBinding
 import com.zuyatna.storyapp.manager.PreferenceManager
 import com.zuyatna.storyapp.model.login.LoginModel
-import com.zuyatna.storyapp.api.ApiConfig
 import com.zuyatna.storyapp.utility.NetworkResult
 import com.zuyatna.storyapp.viewmodel.LoginViewModel
 import com.zuyatna.storyapp.viewmodel.LoginViewModelFactory
@@ -79,7 +79,7 @@ class LoginActivity : AppCompatActivity() {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                completePassword = !(!s.isNullOrEmpty() && s.length < 6)
+                completePassword = !s.isNullOrEmpty()
                 setLoginButtonEnable()
             }
         })

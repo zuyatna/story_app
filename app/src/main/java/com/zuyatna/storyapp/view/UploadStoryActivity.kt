@@ -12,7 +12,9 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
-import android.text.TextUtils
+import android.text.Editable
+import android.text.TextWatcher
+import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -53,6 +55,8 @@ class UploadStoryActivity : AppCompatActivity() {
 
     private var getFile: File? = null
     private var uploadJob: Job = Job()
+    private var isDescFilled = false
+    private var isImageFilled = false
 
     companion object {
         private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA)
@@ -87,6 +91,8 @@ class UploadStoryActivity : AppCompatActivity() {
 
         permissionGranted()
 
+        setUploadButtonEnable()
+
         binding.btUploadStoryCamera.setOnClickListener {
             startTakePhoto()
         }
@@ -95,12 +101,34 @@ class UploadStoryActivity : AppCompatActivity() {
             startGallery()
         }
 
-        binding.btUploadStoryUpload.setOnClickListener {
-            if(getFile != null || !TextUtils.isEmpty(binding.etUploadStoryDescription.text.toString())) {
-                uploadStory(preferenceManager.userToken)
-            } else {
-                Toast.makeText(this, getString(R.string.upload_file_warning), Toast.LENGTH_LONG).show()
+        binding.etUploadStoryDescription.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                //before text changed code here..
             }
+
+            override fun afterTextChanged(s: Editable?) {
+                //after text changed code here..
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                isDescFilled = !s.isNullOrEmpty()
+                setUploadButtonEnable()
+            }
+        })
+
+        binding.btUploadStoryUpload.setOnClickListener {
+            uploadStory(preferenceManager.userToken)
+        }
+    }
+
+    private fun setUploadButtonEnable() {
+        val etDesc = binding.etUploadStoryDescription
+        val btLogin = binding.btUploadStoryUpload
+
+        if (etDesc.text.toString().isEmpty()) {
+            btLogin.isEnabled = false
+        } else {
+            btLogin.isEnabled = isDescFilled && isImageFilled
         }
     }
 
@@ -144,6 +172,9 @@ class UploadStoryActivity : AppCompatActivity() {
 
             val result = BitmapFactory.decodeFile(myFile.path)
             binding.ivUploadStoryPreview.setImageBitmap(result)
+
+            isImageFilled = true
+            setUploadButtonEnable()
         }
     }
 
@@ -163,6 +194,9 @@ class UploadStoryActivity : AppCompatActivity() {
             getFile = myFile
 
             binding.ivUploadStoryPreview.setImageURI(selectedImg)
+
+            isImageFilled = true
+            setUploadButtonEnable()
         }
     }
 
@@ -189,6 +223,9 @@ class UploadStoryActivity : AppCompatActivity() {
     private fun uploadStory(auth: String) {
         val file = reduceFileImage(getFile as File)
         val description = binding.etUploadStoryDescription.text.toString().trim()
+
+        setProgressBar(true)
+
         lifecycle.coroutineScope.launchWhenResumed {
             if (uploadJob.isActive) uploadJob.cancel()
             uploadJob = launch {
@@ -201,6 +238,7 @@ class UploadStoryActivity : AppCompatActivity() {
                         }
                         is NetworkResult.Error -> {
                             Toast.makeText(this@UploadStoryActivity, getString(R.string.upload_file_error), Toast.LENGTH_SHORT).show()
+                            setProgressBar(false)
                         }
                     }
                 }
@@ -225,6 +263,19 @@ class UploadStoryActivity : AppCompatActivity() {
         bitmap.compress(Bitmap.CompressFormat.JPEG, compressQuality, FileOutputStream(file))
 
         return file
+    }
+
+    private fun setProgressBar(loading: Boolean) {
+        when(loading) {
+            true -> {
+                binding.btUploadStoryUpload.visibility = View.GONE
+                binding.pbUploadStory.visibility = View.VISIBLE
+            }
+            false -> {
+                binding.btUploadStoryUpload.visibility = View.VISIBLE
+                binding.pbUploadStory.visibility = View.GONE
+            }
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {
