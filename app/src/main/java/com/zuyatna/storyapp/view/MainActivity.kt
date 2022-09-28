@@ -46,7 +46,7 @@ class MainActivity : AppCompatActivity(), MainAdapter.OnItemClickAdapter {
             fetchData(preferenceManager.userToken)
         }
 
-        binding.fabAddStory.setOnClickListener {
+        binding.fabUploadStory.setOnClickListener {
             startActivity(Intent(this, UploadStoryActivity::class.java))
         }
     }

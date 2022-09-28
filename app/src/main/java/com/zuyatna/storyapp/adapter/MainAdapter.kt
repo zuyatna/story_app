@@ -41,12 +41,12 @@ class MainAdapter(private val context: Context, private val clickListener: OnIte
                 tvCardDesc.text = listStory.description
                 Glide.with(context)
                     .load(listStory.photoUrl)
-                    .into(ivCardPhoto)
+                    .into(ivCardItemStory)
                 root.setOnClickListener {
                     val optionsCompat: ActivityOptionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(context as Activity,
                         Pair(binding.tvCardUsername, "name"),
                         Pair(binding.tvCardDesc, "description"),
-                        Pair(binding.ivCardPhoto, "image")
+                        Pair(binding.ivCardItemStory, "image")
                     )
 
                     clickListener.onItemClicked(listStory, optionsCompat)

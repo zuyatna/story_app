@@ -13,9 +13,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.coroutineScope
 import com.zuyatna.storyapp.R
+import com.zuyatna.storyapp.api.ApiConfig
 import com.zuyatna.storyapp.databinding.ActivityRegisterBinding
 import com.zuyatna.storyapp.model.register.RegisterModel
-import com.zuyatna.storyapp.api.ApiConfig
 import com.zuyatna.storyapp.utility.NetworkResult
 import com.zuyatna.storyapp.viewmodel.RegisterViewModel
 import com.zuyatna.storyapp.viewmodel.RegisterViewModelFactory
@@ -46,7 +46,7 @@ class RegisterActivity : AppCompatActivity() {
         registerViewModel = ViewModelProvider(this, RegisterViewModelFactory(register))[RegisterViewModel::class.java]
         postRegisterForm()
 
-        binding.tvRegisterLogin.setOnClickListener {
+        binding.tvRegisterLoginBt.setOnClickListener {
             startActivity(Intent(this, LoginActivity::class.java))
             finish()
         }
@@ -64,7 +64,7 @@ class RegisterActivity : AppCompatActivity() {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                completeUsername = s.isNullOrEmpty()
+                completeUsername = !s.isNullOrEmpty()
                 setRegisterButtonEnable()
             }
         })
@@ -94,7 +94,7 @@ class RegisterActivity : AppCompatActivity() {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                completePassword = !(!s.isNullOrEmpty() && s.length < 6)
+                completePassword = !s.isNullOrEmpty()
                 setRegisterButtonEnable()
             }
         })
@@ -113,7 +113,7 @@ class RegisterActivity : AppCompatActivity() {
         val etPassword = ObjectAnimator.ofFloat(binding.etRegisterPassword, View.ALPHA, 1f).setDuration(500)
         val btRegister = ObjectAnimator.ofFloat(binding.btRegister, View.ALPHA, 1f).setDuration(500)
         val tvHaveAccount = ObjectAnimator.ofFloat(binding.tvHaveAccount, View.ALPHA, 1f).setDuration(4000)
-        val tvLogin = ObjectAnimator.ofFloat(binding.tvRegisterLogin, View.ALPHA, 1f).setDuration(4000)
+        val tvLogin = ObjectAnimator.ofFloat(binding.tvRegisterLoginBt, View.ALPHA, 1f).setDuration(4000)
 
         AnimatorSet().apply {
             playSequentially(title, etUsername, etEmail, etPassword, btRegister)
@@ -131,7 +131,7 @@ class RegisterActivity : AppCompatActivity() {
         if (etUsername.text.toString().isEmpty() && etEmail.text.toString().isEmpty() && etPassword.text.toString().isEmpty()) {
             btRegister.isEnabled = false
         } else {
-            btRegister.isEnabled = !completeUsername && completeEmail && completePassword
+            btRegister.isEnabled = completeUsername && completeEmail && completePassword
         }
     }
 
