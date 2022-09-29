@@ -18,7 +18,7 @@ import com.zuyatna.storyapp.databinding.ActivityMainBinding
 import com.zuyatna.storyapp.manager.PreferenceManager
 import com.zuyatna.storyapp.model.main.ListStory
 import com.zuyatna.storyapp.model.main.MainModel
-import com.zuyatna.storyapp.utility.NetworkResult
+import com.zuyatna.storyapp.utils.NetworkResult
 import com.zuyatna.storyapp.viewmodel.MainViewModel
 import com.zuyatna.storyapp.viewmodel.MainViewModelFactory
 

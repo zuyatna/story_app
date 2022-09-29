@@ -1,4 +1,4 @@
-package com.zuyatna.storyapp.utility
+package com.zuyatna.storyapp.utils
 
 sealed class NetworkResult<T>(
     val data: T? = null,

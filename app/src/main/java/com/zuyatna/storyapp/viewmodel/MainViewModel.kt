@@ -3,7 +3,7 @@ package com.zuyatna.storyapp.viewmodel
 import androidx.lifecycle.*
 import com.zuyatna.storyapp.model.main.MainModel
 import com.zuyatna.storyapp.model.main.MainResponse
-import com.zuyatna.storyapp.utility.NetworkResult
+import com.zuyatna.storyapp.utils.NetworkResult
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch

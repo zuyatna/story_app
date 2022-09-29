@@ -27,7 +27,7 @@ import com.zuyatna.storyapp.api.ApiConfig
 import com.zuyatna.storyapp.databinding.ActivityUploadStoryBinding
 import com.zuyatna.storyapp.manager.PreferenceManager
 import com.zuyatna.storyapp.model.upload.UploadStoryModel
-import com.zuyatna.storyapp.utility.NetworkResult
+import com.zuyatna.storyapp.utils.NetworkResult
 import com.zuyatna.storyapp.viewmodel.UploadStoryViewModel
 import com.zuyatna.storyapp.viewmodel.UploadStoryViewModelFactory
 import kotlinx.coroutines.Job
