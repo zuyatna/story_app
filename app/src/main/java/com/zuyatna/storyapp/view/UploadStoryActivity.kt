@@ -2,15 +2,11 @@ package com.zuyatna.storyapp.view
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.content.ContentResolver
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
-import android.os.Environment
 import android.provider.MediaStore
 import android.view.View
 import android.widget.Toast
@@ -27,26 +23,17 @@ import com.zuyatna.storyapp.api.ApiConfig
 import com.zuyatna.storyapp.databinding.ActivityUploadStoryBinding
 import com.zuyatna.storyapp.manager.PreferenceManager
 import com.zuyatna.storyapp.model.upload.UploadStoryModel
-import com.zuyatna.storyapp.utils.NetworkResult
+import com.zuyatna.storyapp.utils.*
 import com.zuyatna.storyapp.viewmodel.UploadStoryViewModel
 import com.zuyatna.storyapp.viewmodel.UploadStoryViewModelFactory
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-import java.io.*
-import java.text.SimpleDateFormat
-import java.util.*
+import java.io.File
 
 class UploadStoryActivity : AppCompatActivity() {
     private val binding: ActivityUploadStoryBinding by lazy {
         ActivityUploadStoryBinding.inflate(layoutInflater)
     }
-
-    private val format = "dd-MMM-yyyy"
-
-    private val timeStamp: String = SimpleDateFormat(
-        format,
-        Locale.US
-    ).format(System.currentTimeMillis())
 
     private lateinit var preferenceManager: PreferenceManager
     private lateinit var uploadStoryViewModel: UploadStoryViewModel
@@ -159,7 +146,13 @@ class UploadStoryActivity : AppCompatActivity() {
             val myFile = File(currentPhotoPath)
             getFile = myFile
 
-            val result = BitmapFactory.decodeFile(myFile.path)
+            val isBackCamera = it.data?.getBooleanExtra("isBackCamera", true) as Boolean
+
+            val result = rotateBitmap(
+                BitmapFactory.decodeFile(myFile.path),
+                isBackCamera
+            )
+
             binding.ivUploadStoryPreview.setImageBitmap(result)
 
             isImageFilled = true
@@ -189,26 +182,6 @@ class UploadStoryActivity : AppCompatActivity() {
         }
     }
 
-    private fun createCustomTempFile(context: Context): File {
-        val storageDir: File? = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-        return File.createTempFile(timeStamp, ".jpg", storageDir)
-    }
-
-    private fun uriToFile(selectedImg: Uri, context: Context): File {
-        val contentResolver: ContentResolver = context.contentResolver
-        val myFile = createCustomTempFile(context)
-
-        val inputStream = contentResolver.openInputStream(selectedImg) as InputStream
-        val outputStream: OutputStream = FileOutputStream(myFile)
-        val buf = ByteArray(1024)
-        var len: Int
-        while (inputStream.read(buf).also { len = it } > 0) outputStream.write(buf, 0, len)
-        outputStream.close()
-        inputStream.close()
-
-        return myFile
-    }
-
     private fun uploadStory(auth: String) {
         val file = reduceFileImage(getFile as File)
         val description = binding.etUploadStoryDescription.text.toString().trim()
@@ -233,25 +206,6 @@ class UploadStoryActivity : AppCompatActivity() {
                 }
             }
         }
-    }
-
-    private fun reduceFileImage(file: File): File {
-        val bitmap = BitmapFactory.decodeFile(file.path)
-
-        var compressQuality = 100
-        var streamLength: Int
-
-        do {
-            val bmpStream = ByteArrayOutputStream()
-            bitmap.compress(Bitmap.CompressFormat.JPEG, compressQuality, bmpStream)
-            val bmpPicByteArray = bmpStream.toByteArray()
-            streamLength = bmpPicByteArray.size
-            compressQuality -= 5
-        } while (streamLength > 1000000)
-
-        bitmap.compress(Bitmap.CompressFormat.JPEG, compressQuality, FileOutputStream(file))
-
-        return file
     }
 
     private fun setProgressBar(loading: Boolean) {
