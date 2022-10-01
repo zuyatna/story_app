@@ -67,7 +67,7 @@ class MainActivity : AppCompatActivity(), MainAdapter.OnItemClickAdapter {
                 when (it) {
                     is NetworkResult.Success -> {
                         if (it.data?.listStory != null) {
-                            mainAdapter.setStory(it.data.listStory)
+                            mainAdapter.submitList(it.data.listStory)
                         } else {
                             Toast.makeText(this@MainActivity, getString(R.string.no_data_story), Toast.LENGTH_SHORT).show()
                         }
