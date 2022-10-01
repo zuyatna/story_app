@@ -40,4 +40,6 @@
     <string name="permission_denied">アクセス拒否</string>
     <string name="choose_picture">写真を選ぶ</string>
     <string name="add_desc_and_take_photo">説明を追加して写真を撮る</string>
+    <string name="capture_camera">Capture camera</string>
+    <string name="switch_camera">Switch camera</string>
 </resources>

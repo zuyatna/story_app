@@ -40,4 +40,6 @@
     <string name="permission_denied">Izin ditolak</string>
     <string name="choose_picture">Pilih gambar</string>
     <string name="add_desc_and_take_photo">Tambahkan deskripsi dan ambil foto</string>
+    <string name="capture_camera">Capture camera</string>
+    <string name="switch_camera">Switch camera</string>
 </resources>

@@ -1,20 +1,19 @@
 package com.zuyatna.storyapp.view
 
 import android.Manifest
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
+import android.os.Environment
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.content.FileProvider
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.coroutineScope
@@ -23,12 +22,17 @@ import com.zuyatna.storyapp.api.ApiConfig
 import com.zuyatna.storyapp.databinding.ActivityUploadStoryBinding
 import com.zuyatna.storyapp.manager.PreferenceManager
 import com.zuyatna.storyapp.model.upload.UploadStoryModel
-import com.zuyatna.storyapp.utils.*
+import com.zuyatna.storyapp.utils.NetworkResult
+import com.zuyatna.storyapp.utils.reduceFileImage
+import com.zuyatna.storyapp.utils.rotateBitmap
+import com.zuyatna.storyapp.utils.uriToFile
 import com.zuyatna.storyapp.viewmodel.UploadStoryViewModel
 import com.zuyatna.storyapp.viewmodel.UploadStoryViewModelFactory
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import java.io.ByteArrayOutputStream
 import java.io.File
+import java.io.FileOutputStream
 
 class UploadStoryActivity : AppCompatActivity() {
     private val binding: ActivityUploadStoryBinding by lazy {
@@ -37,7 +41,6 @@ class UploadStoryActivity : AppCompatActivity() {
 
     private lateinit var preferenceManager: PreferenceManager
     private lateinit var uploadStoryViewModel: UploadStoryViewModel
-    private lateinit var currentPhotoPath: String
 
     private var getFile: File? = null
     private var uploadJob: Job = Job()
@@ -45,6 +48,8 @@ class UploadStoryActivity : AppCompatActivity() {
     private var isImageFilled = false
 
     companion object {
+        const val CAMERA_X_RESULT = 200
+
         private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA)
         private const val REQUEST_CODE_PERMISSIONS = 10
     }
@@ -80,7 +85,7 @@ class UploadStoryActivity : AppCompatActivity() {
         setUploadButtonEnable()
 
         binding.btUploadStoryCamera.setOnClickListener {
-            startTakePhoto()
+            startCameraX()
         }
 
         binding.btUploadStoryGallery.setOnClickListener {
@@ -123,28 +128,15 @@ class UploadStoryActivity : AppCompatActivity() {
         }
     }
 
-    @SuppressLint("QueryPermissionsNeeded")
-    private fun startTakePhoto() {
-        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        intent.resolveActivity(packageManager)
-
-        createCustomTempFile(application).also {
-            val photoURI: Uri = FileProvider.getUriForFile(
-                this,
-                "com.zuyatna.storyapp.view",
-                it
-            )
-
-            currentPhotoPath = it.absolutePath
-            intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
-            launcherIntentCamera.launch(intent)
-        }
+    private fun startCameraX() {
+        val intent = Intent(this, CameraActivity::class.java)
+        launcherIntentCameraX.launch(intent)
     }
 
-    private val launcherIntentCamera = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-        if (it.resultCode == RESULT_OK) {
-            val myFile = File(currentPhotoPath)
-            getFile = myFile
+    @Suppress("DEPRECATION", "BlockingMethodInNonBlockingContext")
+    private val launcherIntentCameraX = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        if (it.resultCode == CAMERA_X_RESULT) {
+            val myFile = it.data?.getSerializableExtra("picture") as File
 
             val isBackCamera = it.data?.getBooleanExtra("isBackCamera", true) as Boolean
 
@@ -154,6 +146,21 @@ class UploadStoryActivity : AppCompatActivity() {
             )
 
             binding.ivUploadStoryPreview.setImageBitmap(result)
+
+            getFile = File(Environment.getExternalStorageDirectory().toString() + File.separator + "image")
+            getFile = myFile
+
+            // Convert bitmap to byte array
+            val bos = ByteArrayOutputStream()
+            result.compress(Bitmap.CompressFormat.PNG, 0, bos) // YOU can also save it in JPEG
+            val bitmapData = bos.toByteArray()
+
+            // Write the bytes in file
+            val fos = FileOutputStream(myFile)
+            fos.write(bitmapData)
+            fos.flush()
+            fos.close()
+            getFile
 
             isImageFilled = true
             setUploadButtonEnable()
