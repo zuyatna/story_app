@@ -57,7 +57,6 @@ class MainAdapter(private val context: Context, private val clickListener: OnIte
             oldItem == newItem
     }
 
-
     interface OnItemClickAdapter {
         fun onItemClicked(listStory: ListStory, optionsCompat: ActivityOptionsCompat)
     }
