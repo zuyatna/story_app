@@ -13,7 +13,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.zuyatna.storyapp.R
 import com.zuyatna.storyapp.adapter.MainAdapter
-import com.zuyatna.storyapp.api.ApiConfig
+import com.zuyatna.storyapp.retrofit.ApiConfig
 import com.zuyatna.storyapp.databinding.ActivityMainBinding
 import com.zuyatna.storyapp.manager.PreferenceManager
 import com.zuyatna.storyapp.model.main.ListStory

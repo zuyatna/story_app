@@ -18,7 +18,7 @@ import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.coroutineScope
 import com.zuyatna.storyapp.R
-import com.zuyatna.storyapp.api.ApiConfig
+import com.zuyatna.storyapp.retrofit.ApiConfig
 import com.zuyatna.storyapp.databinding.ActivityUploadStoryBinding
 import com.zuyatna.storyapp.manager.PreferenceManager
 import com.zuyatna.storyapp.model.upload.UploadStoryModel

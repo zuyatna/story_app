@@ -1,6 +1,6 @@
 package com.zuyatna.storyapp.model.upload
 
-import com.zuyatna.storyapp.api.ApiService
+import com.zuyatna.storyapp.retrofit.ApiService
 import com.zuyatna.storyapp.model.user.UserAuth
 import com.zuyatna.storyapp.utils.NetworkResult
 import kotlinx.coroutines.Dispatchers

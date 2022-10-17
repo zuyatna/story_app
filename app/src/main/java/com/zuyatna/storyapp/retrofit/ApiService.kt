@@ -1,4 +1,4 @@
-package com.zuyatna.storyapp.api
+package com.zuyatna.storyapp.retrofit
 
 import com.zuyatna.storyapp.model.login.LoginResponse
 import com.zuyatna.storyapp.model.main.MainResponse
