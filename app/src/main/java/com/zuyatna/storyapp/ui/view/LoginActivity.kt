@@ -14,7 +14,7 @@ import androidx.lifecycle.coroutineScope
 import com.zuyatna.storyapp.R
 import com.zuyatna.storyapp.databinding.ActivityLoginBinding
 import com.zuyatna.storyapp.manager.PreferenceManager
-import com.zuyatna.storyapp.data.local.model.login.LoginModel
+import com.zuyatna.storyapp.data.local.model.login.LoginRepository
 import com.zuyatna.storyapp.data.local.retrofit.ApiConfig
 import com.zuyatna.storyapp.ui.viewmodel.LoginViewModel
 import com.zuyatna.storyapp.ui.viewmodel.LoginViewModelFactory
@@ -44,7 +44,7 @@ class LoginActivity : AppCompatActivity() {
             startActivity(Intent(this, RegisterActivity::class.java))
         }
 
-        val login = LoginModel(ApiConfig.getInstance())
+        val login = LoginRepository(ApiConfig.getInstance())
         loginViewModel = ViewModelProvider(this, LoginViewModelFactory(login))[LoginViewModel::class.java]
         postLoginForm()
 
@@ -112,7 +112,7 @@ class LoginActivity : AppCompatActivity() {
                             when (result) {
                                 is NetworkResult.Success -> {
                                     preferenceManager.isUserLogin = !result.data?.error!!
-                                    preferenceManager.userToken = result.data.result.token
+                                    preferenceManager.userToken = result.data.loginModel.token
 
                                     startActivity(Intent(this@LoginActivity, MainActivity::class.java))
                                     Toast.makeText(this@LoginActivity, getString(R.string.successful_login), Toast.LENGTH_SHORT).show()

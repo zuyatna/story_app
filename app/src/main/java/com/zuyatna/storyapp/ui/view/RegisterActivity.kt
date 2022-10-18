@@ -15,7 +15,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.coroutineScope
 import com.zuyatna.storyapp.R
 import com.zuyatna.storyapp.databinding.ActivityRegisterBinding
-import com.zuyatna.storyapp.data.local.model.register.RegisterModel
+import com.zuyatna.storyapp.data.local.model.register.RegisterRepository
 import com.zuyatna.storyapp.data.local.retrofit.ApiConfig
 import com.zuyatna.storyapp.ui.viewmodel.RegisterViewModel
 import com.zuyatna.storyapp.ui.viewmodel.RegisterViewModelFactory
@@ -43,7 +43,7 @@ class RegisterActivity : AppCompatActivity() {
         supportActionBar?.title = resources.getString(R.string.registration)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        val register = RegisterModel(ApiConfig.getInstance())
+        val register = RegisterRepository(ApiConfig.getInstance())
         registerViewModel = ViewModelProvider(this, RegisterViewModelFactory(register))[RegisterViewModel::class.java]
         postRegisterForm()
 

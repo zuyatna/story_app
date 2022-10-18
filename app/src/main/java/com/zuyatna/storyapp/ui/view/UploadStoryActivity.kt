@@ -20,7 +20,7 @@ import androidx.lifecycle.coroutineScope
 import com.zuyatna.storyapp.R
 import com.zuyatna.storyapp.databinding.ActivityUploadStoryBinding
 import com.zuyatna.storyapp.manager.PreferenceManager
-import com.zuyatna.storyapp.data.local.model.upload.UploadStoryModel
+import com.zuyatna.storyapp.data.local.model.upload.UploadStoryRepository
 import com.zuyatna.storyapp.data.local.retrofit.ApiConfig
 import com.zuyatna.storyapp.ui.viewmodel.UploadStoryViewModel
 import com.zuyatna.storyapp.ui.viewmodel.UploadStoryViewModelFactory
@@ -77,8 +77,8 @@ class UploadStoryActivity : AppCompatActivity() {
 
         preferenceManager = PreferenceManager(this)
 
-        val uploadStoryModel = UploadStoryModel(ApiConfig.getInstance())
-        uploadStoryViewModel = ViewModelProvider(this, UploadStoryViewModelFactory(uploadStoryModel))[UploadStoryViewModel::class.java]
+        val uploadStoryRepository = UploadStoryRepository(ApiConfig.getInstance())
+        uploadStoryViewModel = ViewModelProvider(this, UploadStoryViewModelFactory(uploadStoryRepository))[UploadStoryViewModel::class.java]
 
         permissionGranted()
 

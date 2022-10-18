@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.zuyatna.storyapp.R
 import com.zuyatna.storyapp.databinding.ActivityDetailStoryBinding
-import com.zuyatna.storyapp.data.local.model.main.ListStory
+import com.zuyatna.storyapp.data.local.model.main.StoryModel
 
 class DetailStoryActivity : AppCompatActivity() {
     private val binding: ActivityDetailStoryBinding by lazy {
@@ -30,7 +30,7 @@ class DetailStoryActivity : AppCompatActivity() {
     @Suppress("DEPRECATION")
     private fun fetchData() {
         val getIntent = if (Build.VERSION.SDK_INT >= 33) {
-            intent.getParcelableExtra(DETAIL_STORY, ListStory::class.java)
+            intent.getParcelableExtra(DETAIL_STORY, StoryModel::class.java)
         } else {
             intent.getParcelableExtra(DETAIL_STORY)
         }

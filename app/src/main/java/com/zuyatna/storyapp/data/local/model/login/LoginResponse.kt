@@ -10,16 +10,5 @@ data class LoginResponse(
     val message: String,
 
     @field:SerializedName("loginResult")
-    val result: Result
-)
-
-data class Result(
-    @field:SerializedName("userId")
-    val userId: String,
-
-    @field:SerializedName("name")
-    val name: String,
-
-    @field:SerializedName("token")
-    val token: String,
+    val loginModel: LoginModel
 )

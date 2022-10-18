@@ -15,7 +15,7 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.HttpException
 import java.io.File
 
-class UploadStoryModel constructor(private val apiService: ApiService) {
+class UploadStoryRepository constructor(private val apiService: ApiService) {
     suspend fun uploadStory(userAuth: String, description: String, file: File) : Flow<NetworkResult<UploadStoryResponse>> = flow {
         try {
             val generateToken = UserAuth.generateUserAuthorization(userAuth)

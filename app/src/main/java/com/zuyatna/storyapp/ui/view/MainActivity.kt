@@ -16,8 +16,8 @@ import com.zuyatna.storyapp.ui.adapter.MainAdapter
 import com.zuyatna.storyapp.data.local.retrofit.ApiConfig
 import com.zuyatna.storyapp.databinding.ActivityMainBinding
 import com.zuyatna.storyapp.manager.PreferenceManager
-import com.zuyatna.storyapp.data.local.model.main.ListStory
-import com.zuyatna.storyapp.data.local.model.main.MainModel
+import com.zuyatna.storyapp.data.local.model.main.StoryModel
+import com.zuyatna.storyapp.data.local.model.main.StoryRepository
 import com.zuyatna.storyapp.utils.NetworkResult
 import com.zuyatna.storyapp.ui.viewmodel.MainViewModel
 import com.zuyatna.storyapp.ui.viewmodel.MainViewModelFactory
@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity(), MainAdapter.OnItemClickAdapter {
         preferenceManager = PreferenceManager(this)
         mainAdapter = MainAdapter(this, this)
 
-        val story = MainModel(ApiConfig.getInstance())
+        val story = StoryRepository(ApiConfig.getInstance())
         mainViewModel = ViewModelProvider(this, MainViewModelFactory(story))[MainViewModel::class.java]
         fetchData(preferenceManager.userToken)
 
@@ -66,8 +66,8 @@ class MainActivity : AppCompatActivity(), MainAdapter.OnItemClickAdapter {
             dataListStory.observe(this@MainActivity) {
                 when (it) {
                     is NetworkResult.Success -> {
-                        if (it.data?.listStory != null) {
-                            mainAdapter.submitList(it.data.listStory)
+                        if (it.data?.storyModel != null) {
+                            mainAdapter.submitList(it.data.storyModel)
                         } else {
                             Toast.makeText(this@MainActivity, getString(R.string.no_data_story), Toast.LENGTH_SHORT).show()
                         }
@@ -118,9 +118,9 @@ class MainActivity : AppCompatActivity(), MainAdapter.OnItemClickAdapter {
         return super.onOptionsItemSelected(item)
     }
 
-    override fun onItemClicked(listStory: ListStory, optionsCompat: ActivityOptionsCompat) {
+    override fun onItemClicked(storyModel: StoryModel, optionsCompat: ActivityOptionsCompat) {
         val intent = Intent(this, DetailStoryActivity::class.java)
-        intent.putExtra(DetailStoryActivity.DETAIL_STORY, listStory)
+        intent.putExtra(DetailStoryActivity.DETAIL_STORY, storyModel)
         startActivity(intent, optionsCompat.toBundle())
     }
 }

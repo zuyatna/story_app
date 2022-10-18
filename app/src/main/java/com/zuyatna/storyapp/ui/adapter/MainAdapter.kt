@@ -11,10 +11,10 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.zuyatna.storyapp.databinding.CardItemStoryBinding
-import com.zuyatna.storyapp.data.local.model.main.ListStory
+import com.zuyatna.storyapp.data.local.model.main.StoryModel
 
 class MainAdapter(private val context: Context, private val clickListener: OnItemClickAdapter) :
-    ListAdapter<ListStory, MainAdapter.MainViewHolder>(DiffCallback()) {
+    ListAdapter<StoryModel, MainAdapter.MainViewHolder>(DiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainViewHolder = MainViewHolder(
         CardItemStoryBinding.inflate(LayoutInflater.from(context), parent, false)
@@ -28,12 +28,12 @@ class MainAdapter(private val context: Context, private val clickListener: OnIte
     override fun getItemCount(): Int = currentList.size
 
     inner class MainViewHolder(private val binding: CardItemStoryBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(listStory: ListStory) {
+        fun bind(storyModel: StoryModel) {
             with(binding) {
-                tvCardUsername.text = listStory.name
-                tvCardDesc.text = listStory.description
+                tvCardUsername.text = storyModel.name
+                tvCardDesc.text = storyModel.description
                 Glide.with(context)
-                    .load(listStory.photoUrl)
+                    .load(storyModel.photoUrl)
                     .into(ivCardItemStory)
                 root.setOnClickListener {
                     val optionsCompat: ActivityOptionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(context as Activity,
@@ -42,22 +42,22 @@ class MainAdapter(private val context: Context, private val clickListener: OnIte
                         Pair(binding.ivCardItemStory, "image")
                     )
 
-                    clickListener.onItemClicked(listStory, optionsCompat)
+                    clickListener.onItemClicked(storyModel, optionsCompat)
                 }
             }
         }
     }
 
-    private class DiffCallback : DiffUtil.ItemCallback<ListStory>() {
+    private class DiffCallback : DiffUtil.ItemCallback<StoryModel>() {
 
-        override fun areItemsTheSame(oldItem: ListStory, newItem: ListStory) =
+        override fun areItemsTheSame(oldItem: StoryModel, newItem: StoryModel) =
             oldItem.id == newItem.id
 
-        override fun areContentsTheSame(oldItem: ListStory, newItem: ListStory) =
+        override fun areContentsTheSame(oldItem: StoryModel, newItem: StoryModel) =
             oldItem == newItem
     }
 
     interface OnItemClickAdapter {
-        fun onItemClicked(listStory: ListStory, optionsCompat: ActivityOptionsCompat)
+        fun onItemClicked(storyModel: StoryModel, optionsCompat: ActivityOptionsCompat)
     }
 }

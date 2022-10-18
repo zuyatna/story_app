@@ -1,14 +1,14 @@
 package com.zuyatna.storyapp.ui.viewmodel
 
 import androidx.lifecycle.*
-import com.zuyatna.storyapp.data.local.model.main.MainModel
+import com.zuyatna.storyapp.data.local.model.main.StoryRepository
 import com.zuyatna.storyapp.data.local.model.main.MainResponse
 import com.zuyatna.storyapp.utils.NetworkResult
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
-class MainViewModel constructor(private val mainModel: MainModel) : ViewModel() {
+class MainViewModel constructor(private val storyRepository: StoryRepository) : ViewModel() {
     private val listStory = MutableLiveData<NetworkResult<MainResponse>>()
     private var job: Job? = null
 
@@ -16,7 +16,7 @@ class MainViewModel constructor(private val mainModel: MainModel) : ViewModel() 
 
     fun fetchListStory(userAuth: String) {
         job = viewModelScope.launch {
-            mainModel.getStories(userAuth).collectLatest {
+            storyRepository.getStories(userAuth).collectLatest {
                 listStory.value = it
             }
         }
@@ -29,11 +29,11 @@ class MainViewModel constructor(private val mainModel: MainModel) : ViewModel() 
 }
 
 @Suppress("UNCHECKED_CAST")
-class MainViewModelFactory constructor(private val mainModel: MainModel) : ViewModelProvider.Factory {
+class MainViewModelFactory constructor(private val storyRepository: StoryRepository) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return when {
             modelClass.isAssignableFrom(MainViewModel::class.java) -> {
-                MainViewModel(mainModel) as T
+                MainViewModel(storyRepository) as T
             }
             else -> {
                 throw IllegalArgumentException("Class ViewModel not Implement")

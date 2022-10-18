@@ -42,7 +42,7 @@
     <string name="add_desc_and_take_photo">説明を追加して写真を撮る</string>
     <string name="capture_camera">Capture camera</string>
     <string name="switch_camera">Switch camera</string>
-    <string name="story">Story</string>
-    <string name="maps">Maps</string>
-    <string name="account">Account</string>
+    <string name="story">話 (Story)</string>
+    <string name="maps">マップ (Maps)</string>
+    <string name="account">アカウント</string>
 </resources>
