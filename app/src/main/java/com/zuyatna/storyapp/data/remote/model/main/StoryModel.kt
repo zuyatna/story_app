@@ -1,4 +1,4 @@
-package com.zuyatna.storyapp.data.local.model.main
+package com.zuyatna.storyapp.data.remote.model.main
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
@@ -17,4 +17,14 @@ data class StoryModel(
 
     @field:SerializedName("photoUrl")
     val photoUrl: String,
+
+    @field:SerializedName("createdAt")
+    val createAt: String,
+
+    @field:SerializedName("lat")
+    val latitude: Double?,
+
+    @field:SerializedName("lon")
+    val longitude: Double?
+
 ) : Parcelable

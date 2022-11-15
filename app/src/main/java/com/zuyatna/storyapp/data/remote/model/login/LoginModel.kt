@@ -1,4 +1,4 @@
-package com.zuyatna.storyapp.data.local.model.login
+package com.zuyatna.storyapp.data.remote.model.login
 
 import com.google.gson.annotations.SerializedName
 

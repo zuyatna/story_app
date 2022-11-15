@@ -1,126 +1,31 @@
 package com.zuyatna.storyapp.ui.view
 
-import android.content.Intent
 import android.os.Bundle
-import android.provider.Settings
-import android.view.Menu
-import android.view.MenuItem
-import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityOptionsCompat
-import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.NavigationUI.setupWithNavController
 import com.zuyatna.storyapp.R
-import com.zuyatna.storyapp.ui.adapter.MainAdapter
-import com.zuyatna.storyapp.data.local.retrofit.ApiConfig
 import com.zuyatna.storyapp.databinding.ActivityMainBinding
 import com.zuyatna.storyapp.manager.PreferenceManager
-import com.zuyatna.storyapp.data.local.model.main.StoryModel
-import com.zuyatna.storyapp.data.local.model.main.StoryRepository
-import com.zuyatna.storyapp.utils.NetworkResult
-import com.zuyatna.storyapp.ui.viewmodel.MainViewModel
-import com.zuyatna.storyapp.ui.viewmodel.MainViewModelFactory
+import dagger.hilt.android.AndroidEntryPoint
 
-class MainActivity : AppCompatActivity(), MainAdapter.OnItemClickAdapter {
+@AndroidEntryPoint
+class MainActivity : AppCompatActivity() {
     private val binding: ActivityMainBinding by lazy {
         ActivityMainBinding.inflate(layoutInflater)
     }
 
     private lateinit var preferenceManager: PreferenceManager
-    private lateinit var mainAdapter: MainAdapter
-    private lateinit var mainViewModel: MainViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
         preferenceManager = PreferenceManager(this)
-        mainAdapter = MainAdapter(this, this)
 
-        val story = StoryRepository(ApiConfig.getInstance())
-        mainViewModel = ViewModelProvider(this, MainViewModelFactory(story))[MainViewModel::class.java]
-        fetchData(preferenceManager.userToken)
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
+        val navController = navHostFragment.navController
 
-        binding.srlMain.setOnRefreshListener {
-            binding.srlMain.isRefreshing = true
-            fetchData(preferenceManager.userToken)
-        }
-
-        binding.fabUploadStory.setOnClickListener {
-            startActivity(Intent(this, UploadStoryActivity::class.java))
-        }
-    }
-
-    private fun fetchData(userAuth: String) {
-        binding.rvMain.apply {
-            setHasFixedSize(true)
-            layoutManager = LinearLayoutManager(this@MainActivity)
-            adapter = mainAdapter
-        }
-
-        mainViewModel.apply {
-            setProgressBar(true)
-
-            fetchListStory(userAuth)
-            dataListStory.observe(this@MainActivity) {
-                when (it) {
-                    is NetworkResult.Success -> {
-                        if (it.data?.storyModel != null) {
-                            mainAdapter.submitList(it.data.storyModel)
-                        } else {
-                            Toast.makeText(this@MainActivity, getString(R.string.no_data_story), Toast.LENGTH_SHORT).show()
-                        }
-
-                        setProgressBar(false)
-                        binding.srlMain.isRefreshing = false
-                    }
-                    is NetworkResult.Error -> {
-                        setProgressBar(false)
-
-                        Toast.makeText(this@MainActivity, getString(R.string.error_data_story), Toast.LENGTH_SHORT).show()
-                        binding.srlMain.isRefreshing = false
-                    }
-                }
-            }
-        }
-    }
-
-    private fun setProgressBar(loading: Boolean) {
-        when(loading) {
-            true -> {
-                binding.rvMain.visibility = View.GONE
-                binding.pbMain.visibility = View.VISIBLE
-            }
-            false -> {
-                binding.rvMain.visibility = View.VISIBLE
-                binding.pbMain.visibility = View.GONE
-            }
-        }
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_item, menu)
-        return super.onCreateOptionsMenu(menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId) {
-            R.id.language -> {
-                startActivity(Intent(Settings.ACTION_LOCALE_SETTINGS))
-            }
-            R.id.logout -> {
-                preferenceManager.clearToken()
-                startActivity(Intent(this@MainActivity, LoginActivity::class.java))
-                finish()
-            }
-        }
-        return super.onOptionsItemSelected(item)
-    }
-
-    override fun onItemClicked(storyModel: StoryModel, optionsCompat: ActivityOptionsCompat) {
-        val intent = Intent(this, DetailStoryActivity::class.java)
-        intent.putExtra(DetailStoryActivity.DETAIL_STORY, storyModel)
-        startActivity(intent, optionsCompat.toBundle())
+        setupWithNavController(binding.bottomNavigationView, navController)
     }
 }

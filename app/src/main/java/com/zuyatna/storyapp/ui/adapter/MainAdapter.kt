@@ -2,62 +2,79 @@ package com.zuyatna.storyapp.ui.adapter
 
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.util.Pair
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
+import com.zuyatna.storyapp.R
+import com.zuyatna.storyapp.data.local.entity.Story
 import com.zuyatna.storyapp.databinding.CardItemStoryBinding
-import com.zuyatna.storyapp.data.local.model.main.StoryModel
+import com.zuyatna.storyapp.ui.view.DetailStoryActivity
 
-class MainAdapter(private val context: Context, private val clickListener: OnItemClickAdapter) :
-    ListAdapter<StoryModel, MainAdapter.MainViewHolder>(DiffCallback()) {
+class MainAdapter : PagingDataAdapter<Story, MainAdapter.MainViewHolder>(DiffCallback) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainViewHolder = MainViewHolder(
-        CardItemStoryBinding.inflate(LayoutInflater.from(context), parent, false)
-    )
-
-    override fun onBindViewHolder(holder: MainViewHolder, position: Int) {
-        val item = currentList[position]
-        holder.bind(item)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainViewHolder {
+        val binding = CardItemStoryBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return MainViewHolder(binding)
     }
 
-    override fun getItemCount(): Int = currentList.size
+    @RequiresApi(Build.VERSION_CODES.O)
+    override fun onBindViewHolder(holder: MainViewHolder, position: Int) {
+        val story = getItem(position)
+
+        if (story != null) {
+            holder.bind(holder.itemView.context, story)
+        }
+    }
 
     inner class MainViewHolder(private val binding: CardItemStoryBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(storyModel: StoryModel) {
+        @RequiresApi(Build.VERSION_CODES.O)
+        fun bind(context: Context, story: Story) {
             with(binding) {
-                tvCardUsername.text = storyModel.name
-                tvCardDesc.text = storyModel.description
+                tvCardUsername.text = story.name
+                tvCardDesc.text = story.description
+
+                val options = RequestOptions()
+                    .placeholder(R.drawable.ic_baseline_refresh_24)
+                    .error(R.drawable.ic_baseline_error_outline_24)
+
                 Glide.with(context)
-                    .load(storyModel.photoUrl)
+                    .load(story.photoUrl)
+                    .apply(options)
                     .into(ivCardItemStory)
+
                 root.setOnClickListener {
-                    val optionsCompat: ActivityOptionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(context as Activity,
+                    val optionsCompat: ActivityOptionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(root.context as Activity,
                         Pair(binding.tvCardUsername, "name"),
                         Pair(binding.tvCardDesc, "description"),
                         Pair(binding.ivCardItemStory, "image")
                     )
 
-                    clickListener.onItemClicked(storyModel, optionsCompat)
+                    Intent(context, DetailStoryActivity::class.java).also { intent ->
+                        intent.putExtra(DetailStoryActivity.DETAIL_STORY, story)
+                        context.startActivity(intent, optionsCompat.toBundle())
+                    }
                 }
             }
         }
     }
 
-    private class DiffCallback : DiffUtil.ItemCallback<StoryModel>() {
+    companion object {
+        val DiffCallback = object : DiffUtil.ItemCallback<Story>() {
 
-        override fun areItemsTheSame(oldItem: StoryModel, newItem: StoryModel) =
-            oldItem.id == newItem.id
+            override fun areItemsTheSame(oldItem: Story, newItem: Story) =
+                oldItem.id == newItem.id
 
-        override fun areContentsTheSame(oldItem: StoryModel, newItem: StoryModel) =
-            oldItem == newItem
-    }
-
-    interface OnItemClickAdapter {
-        fun onItemClicked(storyModel: StoryModel, optionsCompat: ActivityOptionsCompat)
+            override fun areContentsTheSame(oldItem: Story, newItem: Story) =
+                oldItem == newItem
+        }
     }
 }

@@ -41,7 +41,10 @@
     <string name="add_desc_and_take_photo">Add description and take a photo</string>
     <string name="capture_camera">Capture camera</string>
     <string name="switch_camera">Switch camera</string>
-    <string name="story">Story</string>
+    <string name="stories">Stories</string>
     <string name="maps">Maps</string>
     <string name="account">Account</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="your_connection_lost">Your connection lost :\\</string>
+    <string name="try_again">Try again</string>
 </resources>

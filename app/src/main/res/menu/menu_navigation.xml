@@ -3,13 +3,13 @@
 
     <item
         android:id="@+id/nav_story"
-        android:title="@string/story"
+        android:title="@string/stories"
         android:icon="@drawable/ic_baseline_home_24" />
 
-    <item
-        android:id="@+id/nav_maps"
-        android:title="@string/maps"
-        android:icon="@drawable/ic_baseline_map_24" />
+<!--    <item-->
+<!--        android:id="@+id/nav_maps"-->
+<!--        android:title="@string/maps"-->
+<!--        android:icon="@drawable/ic_baseline_map_24" />-->
 
     <item
         android:id="@+id/nav_account"

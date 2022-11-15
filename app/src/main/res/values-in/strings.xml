@@ -42,7 +42,10 @@
     <string name="add_desc_and_take_photo">Tambahkan deskripsi dan ambil foto</string>
     <string name="capture_camera">Capture camera</string>
     <string name="switch_camera">Switch camera</string>
-    <string name="story">Cerita</string>
     <string name="maps">Peta</string>
     <string name="account">Akun</string>
+    <string name="try_again">Try again</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="your_connection_lost">Your connection lost :\\</string>
+    <string name="stories">Stories</string>
 </resources>

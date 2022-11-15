@@ -7,28 +7,28 @@ import android.os.Bundle
 import android.util.Patterns
 import android.view.View
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.coroutineScope
 import com.zuyatna.storyapp.R
 import com.zuyatna.storyapp.databinding.ActivityLoginBinding
 import com.zuyatna.storyapp.manager.PreferenceManager
-import com.zuyatna.storyapp.data.local.model.login.LoginRepository
-import com.zuyatna.storyapp.data.local.retrofit.ApiConfig
 import com.zuyatna.storyapp.ui.viewmodel.LoginViewModel
-import com.zuyatna.storyapp.ui.viewmodel.LoginViewModelFactory
 import com.zuyatna.storyapp.utils.NetworkResult
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class LoginActivity : AppCompatActivity() {
     private val binding: ActivityLoginBinding by lazy {
         ActivityLoginBinding.inflate(layoutInflater)
     }
 
-    private lateinit var loginViewModel: LoginViewModel
     private lateinit var preferenceManager: PreferenceManager
+
+    private val loginViewModel: LoginViewModel by viewModels()
 
     private var completeEmail = false
     private var completePassword = false
@@ -44,8 +44,6 @@ class LoginActivity : AppCompatActivity() {
             startActivity(Intent(this, RegisterActivity::class.java))
         }
 
-        val login = LoginRepository(ApiConfig.getInstance())
-        loginViewModel = ViewModelProvider(this, LoginViewModelFactory(login))[LoginViewModel::class.java]
         postLoginForm()
 
         preferenceManager = PreferenceManager(this)

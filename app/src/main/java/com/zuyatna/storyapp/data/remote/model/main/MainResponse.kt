@@ -1,14 +1,14 @@
-package com.zuyatna.storyapp.data.local.model.login
+package com.zuyatna.storyapp.data.remote.model.main
 
 import com.google.gson.annotations.SerializedName
 
-data class LoginResponse(
+data class MainResponse(
     @field:SerializedName("error")
     val error: Boolean,
 
     @field:SerializedName("message")
     val message: String,
 
-    @field:SerializedName("loginResult")
-    val loginModel: LoginModel
+    @field:SerializedName("listStory")
+    val storyModel: List<StoryModel>,
 )

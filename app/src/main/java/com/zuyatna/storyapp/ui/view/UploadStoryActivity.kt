@@ -15,21 +15,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.coroutineScope
 import com.zuyatna.storyapp.R
 import com.zuyatna.storyapp.databinding.ActivityUploadStoryBinding
 import com.zuyatna.storyapp.manager.PreferenceManager
-import com.zuyatna.storyapp.data.local.model.upload.UploadStoryRepository
-import com.zuyatna.storyapp.data.local.retrofit.ApiConfig
 import com.zuyatna.storyapp.ui.viewmodel.UploadStoryViewModel
-import com.zuyatna.storyapp.ui.viewmodel.UploadStoryViewModelFactory
-import com.zuyatna.storyapp.utils.NetworkResult
-import com.zuyatna.storyapp.utils.reduceFileImage
 import com.zuyatna.storyapp.utils.rotateBitmap
 import com.zuyatna.storyapp.utils.uriToFile
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
@@ -77,12 +69,12 @@ class UploadStoryActivity : AppCompatActivity() {
 
         preferenceManager = PreferenceManager(this)
 
-        val uploadStoryRepository = UploadStoryRepository(ApiConfig.getInstance())
-        uploadStoryViewModel = ViewModelProvider(this, UploadStoryViewModelFactory(uploadStoryRepository))[UploadStoryViewModel::class.java]
+//        val uploadStoryRepository = UploadStoryRepository(ApiConfig.getInstance())
+//        uploadStoryViewModel = ViewModelProvider(this, UploadStoryViewModelFactory(uploadStoryRepository))[UploadStoryViewModel::class.java]
 
         permissionGranted()
 
-        setUploadButtonEnable()
+//        setUploadButtonEnable()
 
         binding.btUploadStoryCamera.setOnClickListener {
             startCameraX()
@@ -98,7 +90,7 @@ class UploadStoryActivity : AppCompatActivity() {
         })
 
         binding.btUploadStoryUpload.setOnClickListener {
-            uploadStory(preferenceManager.userToken)
+//            uploadStory(preferenceManager.userToken)
         }
     }
 
@@ -189,31 +181,31 @@ class UploadStoryActivity : AppCompatActivity() {
         }
     }
 
-    private fun uploadStory(auth: String) {
-        val file = reduceFileImage(getFile as File)
-        val description = binding.etUploadStoryDescription.text.toString().trim()
-
-        setProgressBar(true)
-
-        lifecycle.coroutineScope.launchWhenResumed {
-            if (uploadJob.isActive) uploadJob.cancel()
-            uploadJob = launch {
-                uploadStoryViewModel.uploadStory(auth, description, file).collect { result ->
-                    when (result) {
-                        is NetworkResult.Success -> {
-                            Toast.makeText(this@UploadStoryActivity, getString(R.string.upload_file_successful), Toast.LENGTH_SHORT).show()
-                            startActivity(Intent(this@UploadStoryActivity, MainActivity::class.java))
-                            finish()
-                        }
-                        is NetworkResult.Error -> {
-                            Toast.makeText(this@UploadStoryActivity, getString(R.string.upload_file_error), Toast.LENGTH_SHORT).show()
-                            setProgressBar(false)
-                        }
-                    }
-                }
-            }
-        }
-    }
+//    private fun uploadStory(auth: String) {
+//        val file = reduceFileImage(getFile as File)
+//        val description = binding.etUploadStoryDescription.text.toString().trim()
+//
+//        setProgressBar(true)
+//
+//        lifecycle.coroutineScope.launchWhenResumed {
+//            if (uploadJob.isActive) uploadJob.cancel()
+//            uploadJob = launch {
+//                uploadStoryViewModel.uploadStory(auth, description, file).collect { result ->
+//                    when (result) {
+//                        is NetworkResult.Success -> {
+//                            Toast.makeText(this@UploadStoryActivity, getString(R.string.upload_file_successful), Toast.LENGTH_SHORT).show()
+//                            startActivity(Intent(this@UploadStoryActivity, MainActivity::class.java))
+//                            finish()
+//                        }
+//                        is NetworkResult.Error -> {
+//                            Toast.makeText(this@UploadStoryActivity, getString(R.string.upload_file_error), Toast.LENGTH_SHORT).show()
+//                            setProgressBar(false)
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//    }
 
     private fun setProgressBar(loading: Boolean) {
         when(loading) {

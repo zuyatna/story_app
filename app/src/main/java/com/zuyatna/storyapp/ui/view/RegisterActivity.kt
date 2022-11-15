@@ -9,27 +9,25 @@ import android.text.TextWatcher
 import android.util.Patterns
 import android.view.View
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.coroutineScope
 import com.zuyatna.storyapp.R
 import com.zuyatna.storyapp.databinding.ActivityRegisterBinding
-import com.zuyatna.storyapp.data.local.model.register.RegisterRepository
-import com.zuyatna.storyapp.data.local.retrofit.ApiConfig
 import com.zuyatna.storyapp.ui.viewmodel.RegisterViewModel
-import com.zuyatna.storyapp.ui.viewmodel.RegisterViewModelFactory
 import com.zuyatna.storyapp.utils.NetworkResult
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
-
+@AndroidEntryPoint
 class RegisterActivity : AppCompatActivity() {
     private val binding: ActivityRegisterBinding by lazy {
         ActivityRegisterBinding.inflate(layoutInflater)
     }
 
-    private lateinit var registerViewModel: RegisterViewModel
+    private val registerViewModel: RegisterViewModel by viewModels()
 
     private var completeUsername = false
     private var completeEmail = false
@@ -43,8 +41,6 @@ class RegisterActivity : AppCompatActivity() {
         supportActionBar?.title = resources.getString(R.string.registration)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        val register = RegisterRepository(ApiConfig.getInstance())
-        registerViewModel = ViewModelProvider(this, RegisterViewModelFactory(register))[RegisterViewModel::class.java]
         postRegisterForm()
 
         binding.tvRegisterLoginBt.setOnClickListener {

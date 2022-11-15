@@ -5,8 +5,8 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.zuyatna.storyapp.R
+import com.zuyatna.storyapp.data.remote.model.main.StoryModel
 import com.zuyatna.storyapp.databinding.ActivityDetailStoryBinding
-import com.zuyatna.storyapp.data.local.model.main.StoryModel
 
 class DetailStoryActivity : AppCompatActivity() {
     private val binding: ActivityDetailStoryBinding by lazy {
