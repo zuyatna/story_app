@@ -6,12 +6,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.zuyatna.storyapp.R
 import com.zuyatna.storyapp.databinding.FragmentStoryBinding
 import com.zuyatna.storyapp.manager.PreferenceManager
 import com.zuyatna.storyapp.ui.adapter.LoadingStateAdapter
@@ -45,10 +47,10 @@ class StoryFragment : Fragment() {
         preferenceManager = PreferenceManager(requireContext())
         mainAdapter = MainAdapter()
 
-//        (activity as AppCompatActivity).apply {
-//            setSupportActionBar(binding?.toolbar)
-//            supportActionBar?.title = resources.getString(R.string.story_app)
-//        }
+        (activity as AppCompatActivity).apply {
+            setSupportActionBar(binding?.toolbar)
+            supportActionBar?.title = resources.getString(R.string.story_app)
+        }
 
         binding?.toolbar?.apply {
             setTitleTextColor(Color.WHITE)
