@@ -10,6 +10,11 @@ import hu.autsoft.krate.stringPref
 class PreferenceManager(context: Context) : Krate {
     var isUserLogin by booleanPref().withDefault(false)
     var userToken by stringPref().withDefault("")
+    var username by stringPref().withDefault("")
 
     override val sharedPreferences: SharedPreferences = context.applicationContext.getSharedPreferences("preference_manager", Context.MODE_PRIVATE)
+
+    fun clear() {
+        sharedPreferences.edit().clear().apply()
+    }
 }

@@ -111,6 +111,7 @@ class LoginActivity : AppCompatActivity() {
                                 is NetworkResult.Success -> {
                                     preferenceManager.isUserLogin = !result.data?.error!!
                                     preferenceManager.userToken = result.data.loginModel.token
+                                    preferenceManager.username = result.data.loginModel.name
 
                                     startActivity(Intent(this@LoginActivity, MainActivity::class.java))
                                     Toast.makeText(this@LoginActivity, getString(R.string.successful_login), Toast.LENGTH_SHORT).show()

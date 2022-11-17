@@ -49,4 +49,5 @@
     <string name="try_again">Try again</string>
     <string name="language_setting">Language setting</string>
     <string name="user_avatar">User Avatar</string>
+    <string name="detail_activity">Detail</string>
 </resources>
