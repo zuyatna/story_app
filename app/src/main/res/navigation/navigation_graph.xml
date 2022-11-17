@@ -3,21 +3,29 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation_graph"
-    app:startDestination="@id/story">
+    app:startDestination="@id/nav_story">
 
     <fragment
-        android:id="@+id/story"
+        android:id="@+id/nav_story"
         android:name="com.zuyatna.storyapp.ui.view.fragment.StoryFragment"
         android:label="fragment_story"
         tools:layout="@layout/fragment_story">
 
+        <action
+            android:id="@+id/action_storyFragment_to_accountFragment"
+            app:destination="@+id/nav_account"/>
+
     </fragment>
 
     <fragment
-        android:id="@+id/stories"
-        android:name="com.zuyatna.storyapp.StoriesFragment"
-        android:label="fragment_stories"
-        tools:layout="@layout/fragment_stories">
+        android:id="@+id/nav_account"
+        android:name="com.zuyatna.storyapp.ui.view.fragment.AccountFragment"
+        android:label="fragment_account"
+        tools:layout="@layout/fragment_account">
+
+        <action
+            android:id="@+id/action_accountFragment_to_storyFragment"
+            app:destination="@id/nav_story"/>
 
     </fragment>
 

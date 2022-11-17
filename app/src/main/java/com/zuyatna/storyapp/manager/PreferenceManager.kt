@@ -12,8 +12,4 @@ class PreferenceManager(context: Context) : Krate {
     var userToken by stringPref().withDefault("")
 
     override val sharedPreferences: SharedPreferences = context.applicationContext.getSharedPreferences("preference_manager", Context.MODE_PRIVATE)
-
-    fun clearToken() {
-        sharedPreferences.edit().clear().apply()
-    }
 }

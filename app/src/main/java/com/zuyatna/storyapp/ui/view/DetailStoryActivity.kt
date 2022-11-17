@@ -1,11 +1,12 @@
 package com.zuyatna.storyapp.ui.view
 
-import android.os.Build
+import android.graphics.Color
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.zuyatna.storyapp.R
-import com.zuyatna.storyapp.data.remote.model.main.StoryModel
+import com.zuyatna.storyapp.data.local.entity.Story
 import com.zuyatna.storyapp.databinding.ActivityDetailStoryBinding
 
 class DetailStoryActivity : AppCompatActivity() {
@@ -21,19 +22,22 @@ class DetailStoryActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
+        setSupportActionBar(binding.toolbar)
         supportActionBar?.title = getString(R.string.detail)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        binding.toolbar.apply {
+            setTitleTextColor(Color.WHITE)
+            setSubtitleTextColor(Color.WHITE)
+        }
+
+        window.navigationBarColor = ContextCompat.getColor(this@DetailStoryActivity, R.color.white)
 
         fetchData()
     }
 
-    @Suppress("DEPRECATION")
     private fun fetchData() {
-        val getIntent = if (Build.VERSION.SDK_INT >= 33) {
-            intent.getParcelableExtra(DETAIL_STORY, StoryModel::class.java)
-        } else {
-            intent.getParcelableExtra(DETAIL_STORY)
-        }
+        val getIntent = intent.getParcelableExtra<Story>(DETAIL_STORY)
 
         binding.apply {
             tvDetailStoryUsername.text = getIntent?.name

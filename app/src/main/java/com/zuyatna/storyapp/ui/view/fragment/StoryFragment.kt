@@ -17,7 +17,7 @@ import com.zuyatna.storyapp.R
 import com.zuyatna.storyapp.databinding.FragmentStoryBinding
 import com.zuyatna.storyapp.manager.PreferenceManager
 import com.zuyatna.storyapp.ui.adapter.LoadingStateAdapter
-import com.zuyatna.storyapp.ui.adapter.MainAdapter
+import com.zuyatna.storyapp.ui.adapter.StoryAdapter
 import com.zuyatna.storyapp.ui.view.UploadStoryActivity
 import com.zuyatna.storyapp.ui.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -26,7 +26,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @ExperimentalPagingApi
 class StoryFragment : Fragment() {
     private lateinit var preferenceManager: PreferenceManager
-    private lateinit var mainAdapter: MainAdapter
+    private lateinit var storyAdapter: StoryAdapter
 
     private var _binding: FragmentStoryBinding? = null
 
@@ -45,7 +45,7 @@ class StoryFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         preferenceManager = PreferenceManager(requireContext())
-        mainAdapter = MainAdapter()
+        storyAdapter = StoryAdapter()
 
         (activity as AppCompatActivity).apply {
             setSupportActionBar(binding?.toolbar)
@@ -68,7 +68,7 @@ class StoryFragment : Fragment() {
 
     private fun getStory() {
         viewModel.getStories(preferenceManager.userToken).observe(viewLifecycleOwner) {
-            mainAdapter.submitData(lifecycle, it)
+            storyAdapter.submitData(lifecycle, it)
         }
     }
 
@@ -76,30 +76,30 @@ class StoryFragment : Fragment() {
         binding?.apply {
             rvStory.setHasFixedSize(true)
             rvStory.layoutManager = LinearLayoutManager(requireContext())
-            rvStory.adapter = mainAdapter.withLoadStateHeaderAndFooter(
-                header = LoadingStateAdapter { mainAdapter.retry() },
-                footer = LoadingStateAdapter { mainAdapter.retry() }
+            rvStory.adapter = storyAdapter.withLoadStateHeaderAndFooter(
+                header = LoadingStateAdapter { storyAdapter.retry() },
+                footer = LoadingStateAdapter { storyAdapter.retry() }
             )
 
             swlStory.setOnRefreshListener {
-                mainAdapter.refresh()
+                storyAdapter.refresh()
                 swlStory.isRefreshing = false
                 rvStory.visibility = View.GONE
             }
 
             btnTry.setOnClickListener {
-                mainAdapter.retry()
+                storyAdapter.retry()
             }
         }
 
-        mainAdapter.addLoadStateListener {
+        storyAdapter.addLoadStateListener {
             binding?.apply {
                 rvStory.isVisible = it.source.refresh is LoadState.NotLoading
                 pbMain.isVisible = it.source.refresh is LoadState.Loading
                 btnTry.isVisible = it.source.refresh is LoadState.Error
                 tvError.isVisible = it.source.refresh is LoadState.Error
 
-                if (it.source.refresh is LoadState.NotLoading && it.append.endOfPaginationReached && mainAdapter.itemCount < 1) {
+                if (it.source.refresh is LoadState.NotLoading && it.append.endOfPaginationReached && storyAdapter.itemCount < 1) {
                     rvStory.isVisible = false
                     tvError.isVisible = true
                 } else {

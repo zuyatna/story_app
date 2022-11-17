@@ -19,15 +19,15 @@ import com.zuyatna.storyapp.data.local.entity.Story
 import com.zuyatna.storyapp.databinding.CardItemStoryBinding
 import com.zuyatna.storyapp.ui.view.DetailStoryActivity
 
-class MainAdapter : PagingDataAdapter<Story, MainAdapter.MainViewHolder>(DiffCallback) {
+class StoryAdapter : PagingDataAdapter<Story, StoryAdapter.StoryViewHolder>(DiffCallback) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StoryViewHolder {
         val binding = CardItemStoryBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return MainViewHolder(binding)
+        return StoryViewHolder(binding)
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    override fun onBindViewHolder(holder: MainViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: StoryViewHolder, position: Int) {
         val story = getItem(position)
 
         if (story != null) {
@@ -35,7 +35,7 @@ class MainAdapter : PagingDataAdapter<Story, MainAdapter.MainViewHolder>(DiffCal
         }
     }
 
-    inner class MainViewHolder(private val binding: CardItemStoryBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class StoryViewHolder(private val binding: CardItemStoryBinding) : RecyclerView.ViewHolder(binding.root) {
         @RequiresApi(Build.VERSION_CODES.O)
         fun bind(context: Context, story: Story) {
             with(binding) {
