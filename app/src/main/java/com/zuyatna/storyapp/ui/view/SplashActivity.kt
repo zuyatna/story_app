@@ -28,8 +28,6 @@ class SplashActivity : AppCompatActivity() {
         lifecycleScope.launch {
             delay(2000)
 
-            preferenceManager.isUserLogin = false
-
             val intent = if (preferenceManager.isUserLogin) {
                 Intent(this@SplashActivity, MainActivity::class.java)
             } else {
