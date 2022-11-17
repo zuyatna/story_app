@@ -50,4 +50,6 @@
     <string name="language_setting">Language setting</string>
     <string name="user_avatar">User Avatar</string>
     <string name="detail_activity">Detail</string>
+    <string name="toolbar">toolbar</string>
+    <string name="back_button">back button</string>
 </resources>

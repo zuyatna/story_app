@@ -62,7 +62,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/shape_blue"
-            android:contentDescription="toolbar" />
+            android:contentDescription="@string/toolbar" />
 
         <ImageView
             android:id="@+id/ivBack"
@@ -73,7 +73,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/ivToolbar"
             app:srcCompat="@drawable/ic_back"
-            android:contentDescription="back button" />
+            android:contentDescription="@string/back_button" />
 
         <TextView
             android:id="@+id/textView"

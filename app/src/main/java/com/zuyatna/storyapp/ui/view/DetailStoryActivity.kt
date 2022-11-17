@@ -1,5 +1,6 @@
 package com.zuyatna.storyapp.ui.view
 
+import android.os.Build
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
@@ -21,7 +22,7 @@ class DetailStoryActivity : AppCompatActivity() {
 
         binding.apply {
             ivBack.setOnClickListener {
-                onBackPressed()
+                onBackPressedDispatcher.onBackPressed()
             }
         }
 
@@ -29,7 +30,11 @@ class DetailStoryActivity : AppCompatActivity() {
     }
 
     private fun fetchData() {
-        val getIntent = intent.getParcelableExtra<Story>(DETAIL_STORY)
+        val getIntent = if (Build.VERSION.SDK_INT >= 33) {
+            intent.getParcelableExtra(DETAIL_STORY, Story::class.java)
+        } else {
+            intent.getParcelableExtra(DETAIL_STORY)
+        }
 
         binding.apply {
             tvDetailStoryUsername.text = getIntent?.name
@@ -38,10 +43,5 @@ class DetailStoryActivity : AppCompatActivity() {
                 .load(getIntent?.photoUrl)
                 .into(ivDetailStoryPhoto)
         }
-    }
-
-    override fun onSupportNavigateUp(): Boolean {
-        finish()
-        return super.onSupportNavigateUp()
     }
 }

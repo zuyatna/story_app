@@ -64,9 +64,6 @@ class UploadStoryActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        supportActionBar?.title = getString(R.string.upload_story)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
         preferenceManager = PreferenceManager(this)
 
 //        val uploadStoryRepository = UploadStoryRepository(ApiConfig.getInstance())
@@ -75,6 +72,12 @@ class UploadStoryActivity : AppCompatActivity() {
         permissionGranted()
 
 //        setUploadButtonEnable()
+
+        binding.apply {
+            ivBack.setOnClickListener {
+                onBackPressedDispatcher.onBackPressed()
+            }
+        }
 
         binding.btUploadStoryCamera.setOnClickListener {
             startCameraX()
@@ -218,10 +221,5 @@ class UploadStoryActivity : AppCompatActivity() {
                 binding.pbUploadStory.visibility = View.GONE
             }
         }
-    }
-
-    override fun onSupportNavigateUp(): Boolean {
-        finish()
-        return super.onSupportNavigateUp()
     }
 }
