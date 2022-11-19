@@ -21,10 +21,12 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MapStyleOptions
+import com.google.android.gms.maps.model.MarkerOptions
 import com.zuyatna.storyapp.R
 import com.zuyatna.storyapp.databinding.FragmentMapsBinding
 import com.zuyatna.storyapp.manager.PreferenceManager
 import com.zuyatna.storyapp.ui.viewmodel.MapsViewModel
+import com.zuyatna.storyapp.utils.NetworkResult
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -96,7 +98,28 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
     private fun markLocationStory() {
         lifecycleScope.launchWhenResumed {
             launch {
-                mapsViewModel.getStoriesLocation(preferenceManager.userToken)
+                mapsViewModel.getStoriesLocation(preferenceManager.userToken).collect {result ->
+                    when(result) {
+                        is NetworkResult.Success -> {
+                            result.data?.storyModel?.forEach {
+                                if(it.latitude != null && it.longitude != null) {
+                                    val latLng = LatLng(it.latitude, it.longitude)
+                                    mMap.addMarker(
+                                        MarkerOptions()
+                                            .position(latLng)
+                                            .title(it.name)
+                                            .snippet("Lat : ${it.latitude}, Lon : ${it.longitude}")
+                                    )
+                                    Timber.d(latLng.toString())
+                                }
+                            }
+                        }
+                        
+                        is NetworkResult.Error -> {
+                            Timber.d(result.message)
+                        }
+                    }
+                }
             }
         }
     }

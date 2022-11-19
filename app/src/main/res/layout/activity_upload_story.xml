@@ -44,7 +44,7 @@
     <ImageView
         android:id="@+id/iv_upload_story_preview"
         android:layout_width="0dp"
-        android:layout_height="300dp"
+        android:layout_height="250dp"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
         android:contentDescription="@string/preview_photo_add_story"
@@ -84,7 +84,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="24dp"
-        android:layout_marginBottom="36dp"
+        android:layout_marginBottom="100dp"
         android:background="@drawable/bg_edit_text"
         android:gravity="start"
         android:hint="@string/what_s_your_story_today"
@@ -95,6 +95,23 @@
         app:layout_constraintEnd_toEndOf="@+id/bt_upload_story_gallery"
         app:layout_constraintStart_toStartOf="@+id/bt_upload_story_camera"
         app:layout_constraintTop_toBottomOf="@+id/bt_upload_story_camera" />
+
+    <TextView
+        android:id="@+id/tv_share_location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="36dp"
+        android:text="Share Location"
+        app:layout_constraintBottom_toTopOf="@+id/bt_upload_story_upload"
+        app:layout_constraintStart_toStartOf="@id/et_upload_story_description" />
+
+    <CheckBox
+        android:id="@+id/checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_share_location"
+        app:layout_constraintEnd_toEndOf="@+id/et_upload_story_description"
+        app:layout_constraintTop_toTopOf="@+id/tv_share_location" />
 
     <com.zuyatna.storyapp.customview.UploadStoryButton
         android:id="@+id/bt_upload_story_upload"
