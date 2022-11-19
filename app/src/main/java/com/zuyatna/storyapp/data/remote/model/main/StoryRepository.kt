@@ -18,12 +18,8 @@ class StoryRepository @Inject constructor(private val database: StoryDatabase, p
     fun getStories(userAuth: String) : Flow<PagingData<Story>> =
         Pager(
             config = PagingConfig(pageSize = 10),
-            remoteMediator = StoryRemoteMediator(
-                database,
-                apiService,
-                generateAuthorization(userAuth)
-            ),
-            pagingSourceFactory ={
+            remoteMediator = StoryRemoteMediator(database, apiService, generateAuthorization(userAuth)),
+            pagingSourceFactory = {
                 database.storyDao().getStories()
             }
         ).flow

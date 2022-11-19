@@ -1,0 +1,41 @@
+1. Test Main ViewModel
+    a. Store the user data token
+    b. Make sure that the getStories method can be called
+    c. Make sure that the data story is not null
+    d. Make sure there are have equality between the server data source and data dummy
+
+
+2. Test Login and Register ViewModel
+2.1 Success
+    a. Make sure that login & register method is success when take an action
+    b. Make sure the data is not null
+    c. Make sure there are have equality data response between data dummy and the server source
+    d. Make sure that login & register method can be called
+
+2.2 Error
+    a. Make sure that login & register is failed, when take an action
+    b. Make sure the data is null, when in the failed condition
+    c. Make sure that login & register method can be called
+
+3. Test MapsViewMode
+3.1 Success
+    a. Make sure the data is success to fetching
+    b. Make sure the data is not null
+    c. Make sure there are have equality data response between data dummy and the server source
+    d. Make sure the getStories can be called
+
+3.2 Error
+    a. Make sure the data is failed, when take an action
+    b. Make sure the data is null, when in the failed condition
+    c. Make sure the getStories method can be called
+
+4. Test UploadStoryViewModel
+4.1 Success
+    a. Make sure the user success to upload the file
+    b. Make sure the data is not null
+    c. Make sure there are have equality data response between data dummy and the server source
+    d. Make sure the getStories method can be called
+
+4.2 Error
+    a. Make sure the user failed to upload the file
+    b. Make sure the data response is not equal with the server source

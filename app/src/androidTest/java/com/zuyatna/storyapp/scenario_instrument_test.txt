@@ -1,0 +1,8 @@
+1. Success Scenario
+    a. The [RecyclerView] will show when success to get data from the API
+    b. Make sure that the [toolbar] is active
+    c. Make sure that the response name is correct
+    d. Make sure that the caution tv_not_found or tv_error not showing when the data successful to fetch
+
+2. Empty or Error
+    a. Make sure that the tv_not_found or tv_error will show when the data is fetching from empty API

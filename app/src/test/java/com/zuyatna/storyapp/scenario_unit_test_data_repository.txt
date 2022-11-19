@@ -1,0 +1,23 @@
+[Test Data Repository]
+1. Test method Login and Register
+1.1 Success
+    a. Make sure that the login & register is success, when take an action
+    b. Make sure that the data not null
+    c. Make sure there are have equality data response between data dummy and the server source
+    d. Make sure that the login & register method can be called
+
+1.2 Error
+    a. Make sure that the login & register method is failed, when take an action
+    b. Make sure that the data is null, when in the failed condition
+    c. Make sure that the login & register method can be called
+
+2. Test method UploadStoryViewModel
+2.1 Success
+    a. Make sure that the user success to upload the file
+    b. Make sure that the data is not null
+    c. Make sure there are have equality data response between data dummy and the server source
+    d. Make sure that uploadStory method can be called
+
+2.2 Error
+    a. Make sure that the user failed to upload the file
+    b. Make sure the data response is not equal from the server source

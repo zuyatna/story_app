@@ -1,0 +1,6 @@
+[Test Story Repository]
+1. Test method getStories
+    a. Store the data token
+    b. Make sure that getStories method can be called
+    c. Make sure the data story is not null
+    d. Make sure the equality between the server source and data dummy

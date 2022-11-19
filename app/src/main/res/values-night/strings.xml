@@ -10,4 +10,5 @@
     <string name="user_avatar">User Avatar</string>
     <string name="toolbar">toolbar</string>
     <string name="back_button">back button</string>
+    <string name="data_not_found">Data not found :\\</string>
 </resources>

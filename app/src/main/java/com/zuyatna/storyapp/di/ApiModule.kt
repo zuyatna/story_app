@@ -15,7 +15,7 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object ApiModule {
-    private var apiConfig = "https://story-api.dicoding.dev/v1/"
+    var apiConfig = "https://story-api.dicoding.dev/v1/"
     @Singleton
     @Provides
     fun provideOkHttpClient(): OkHttpClient {
