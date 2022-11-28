@@ -38,6 +38,7 @@ class StoryRepositoryTest {
     @Mock
     private lateinit var storyRepositoryMock: StoryRepository
     private lateinit var storyRepository: StoryRepository
+
     private val dummyToken = DataDummy.generateDummyToken()
     private val dummyStoriesResponse = DataDummy.generateDummyStoriesResponse()
 
@@ -62,12 +63,11 @@ class StoryRepositoryTest {
                 mainDispatcher = coroutinesTestRule.testDispatcher,
                 workerDispatcher = coroutinesTestRule.testDispatcher
             )
+
             differ.submitData(result)
+
             Assert.assertNotNull(differ.snapshot())
-            assertEquals(
-                dummyStoriesResponse.storyModel.size,
-                differ.snapshot().size
-            )
+            assertEquals(dummyStoriesResponse.storyModel.size, differ.snapshot().size)
         }
 
     }

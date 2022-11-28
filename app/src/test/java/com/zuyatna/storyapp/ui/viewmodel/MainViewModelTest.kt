@@ -1,22 +1,19 @@
 package com.zuyatna.storyapp.ui.viewmodel
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.lifecycle.MutableLiveData
 import androidx.paging.AsyncPagingDataDiffer
 import androidx.paging.ExperimentalPagingApi
-import androidx.paging.PagingData
 import androidx.recyclerview.widget.ListUpdateCallback
-import com.zuyatna.storyapp.data.local.entity.Story
+import com.zuyatna.storyapp.data.remote.model.main.StoryRepository
 import com.zuyatna.storyapp.ui.adapter.StoryAdapter
-import com.zuyatna.storyapp.utils.CoroutinesTestRule
-import com.zuyatna.storyapp.utils.DataDummy
-import com.zuyatna.storyapp.utils.PagedTestDataSource
-import com.zuyatna.storyapp.utils.getOrAwaitValue
+import com.zuyatna.storyapp.utils.*
 import junit.framework.Assert
 import junit.framework.Assert.assertEquals
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -34,19 +31,25 @@ class MainViewModelTest {
     @get:Rule
     var coroutinesTestRule = CoroutinesTestRule()
 
-    @Mock
     private lateinit var mainViewModel: MainViewModel
+
+    @Mock
+    private lateinit var storyRepository: StoryRepository
     private val dummyToken = DataDummy.generateDummyToken()
+
+    @Before
+    fun setup() {
+        mainViewModel = MainViewModel(storyRepository)
+    }
 
     @Test
     fun `Get stories successfully`() = runTest {
         val dummyStories = DataDummy.generateDummyListStory()
         val data = PagedTestDataSource.snapshot(dummyStories)
 
-        val stories = MutableLiveData<PagingData<Story>>()
-        stories.value = data
+        val expectedStory = flowOf(data)
 
-        Mockito.`when`(mainViewModel.getStories(dummyToken)).thenReturn(stories)
+        Mockito.`when`(storyRepository.getStories(dummyToken)).thenReturn(expectedStory)
 
         val actualStories = mainViewModel.getStories(dummyToken).getOrAwaitValue()
         val differ = AsyncPagingDataDiffer(
@@ -59,7 +62,7 @@ class MainViewModelTest {
 
         advanceUntilIdle()
 
-        Mockito.verify(mainViewModel).getStories(dummyToken)
+        Mockito.verify(storyRepository).getStories(dummyToken)
         Assert.assertNotNull(differ.snapshot())
         assertEquals(dummyStories.size, differ.snapshot().size)
     }

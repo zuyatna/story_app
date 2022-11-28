@@ -1,41 +1,53 @@
 1. Test Main ViewModel
-    a. Store the user data token
-    b. Make sure that the getStories method can be called
-    c. Make sure that the data story is not null
-    d. Make sure there are have equality between the server data source and data dummy
+    a. memastikan method getStories dapat terpanggil
+    b. memastikan data story tidak null
+    c. memastikan kesamaan panjang ukuran data asli dengan data dummy
 
 
-2. Test Login and Register ViewModel
+2. Test Login ViewModel
 2.1 Success
-    a. Make sure that login & register method is success when take an action
-    b. Make sure the data is not null
-    c. Make sure there are have equality data response between data dummy and the server source
-    d. Make sure that login & register method can be called
+    a. memastikan mengembalikan result.success
+    b. memastikan data tidak null
+    c. memastikan kesamaan response antara data dummy dan data asli
+    d. memastika method login dapat terpanggil
 
 2.2 Error
-    a. Make sure that login & register is failed, when take an action
-    b. Make sure the data is null, when in the failed condition
-    c. Make sure that login & register method can be called
+    a. Mmemastikan mengembalikan result.error dengan parameter "failed"
+    b. memastikan message tidak null
+    c. memastika method login dapat terpanggil
+
+2. Test Register ViewModel
+2.1 Success
+    a. memastikan mengembalikan result.success
+    b. memastikan data tidak null
+    c. memastikan kesamaan response antara data dummy dan data asli
+    d. memastika method register dapat terpanggil
+
+2.2 Error
+    a. memastikan mengembalikan result.error dengan parameter "failed"
+    b. memastikan message tidak null
+    c. memastika method register dapat terpanggil
 
 3. Test MapsViewMode
 3.1 Success
-    a. Make sure the data is success to fetching
-    b. Make sure the data is not null
-    c. Make sure there are have equality data response between data dummy and the server source
-    d. Make sure the getStories can be called
+    a. memastikan mengembalikan result.success
+    b. memastikan data tidak null
+    c. memastikan kesamaan response antara data dummy dan data asli
+    d. memastika method getStoriesLocation dapat terpanggil
 
 3.2 Error
-    a. Make sure the data is failed, when take an action
-    b. Make sure the data is null, when in the failed condition
-    c. Make sure the getStories method can be called
+    a. memastikan mengembalikan result.error dengan parameter "failed"
+    b. memastikan message tidak null
+    c. memastika method getStoriesLocation dapat terpanggil
 
 4. Test UploadStoryViewModel
 4.1 Success
-    a. Make sure the user success to upload the file
-    b. Make sure the data is not null
-    c. Make sure there are have equality data response between data dummy and the server source
-    d. Make sure the getStories method can be called
+    a. memastikan mengembalikan result.success
+    b. memastikan data tidak null
+    c. memastikan kesamaan response antara data dummy dan data asli
+    d. memastika method uploadStory dapat terpanggil
 
 4.2 Error
-    a. Make sure the user failed to upload the file
-    b. Make sure the data response is not equal with the server source
+    a. memastikan mengembalikan result.error dengan parameter "failed"
+    b. memastikan message tidak null
+    c. memastika method uploadStory dapat terpanggil

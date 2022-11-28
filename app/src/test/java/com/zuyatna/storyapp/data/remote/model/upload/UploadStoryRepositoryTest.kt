@@ -24,6 +24,7 @@ class UploadStoryRepositoryTest {
     @Mock
     private lateinit var uploadStorySource: UploadStorySource
     private lateinit var uploadStoryRepository: UploadStoryRepository
+
     private val dummyToken = DataDummy.generateDummyToken()
     private val dummyMultipart = DataDummy.generateDummyMultipartFile()
     private val dummyDescription = DataDummy.generateDummyRequestBody()
@@ -37,8 +38,7 @@ class UploadStoryRepositoryTest {
     fun `Upload image file - successfully`() = runTest {
         val expectedResponse = DataDummy.generateDummyFileUploadResponse()
 
-        Mockito.`when`(
-            uploadStorySource.uploadStory(
+        Mockito.`when`(uploadStorySource.uploadStory(
                 "Bearer $dummyToken",
                 "text",
                 "",
@@ -47,20 +47,12 @@ class UploadStoryRepositoryTest {
             )
         ).thenReturn(Response.success(expectedResponse))
 
-        uploadStoryRepository.uploadStory(dummyToken, "text", "", "",dummyMultipart)
-            .collect { result ->
-                when(result){
-                    is NetworkResult.Success -> {
-                        Assert.assertNotNull(result.data)
-                        Assert.assertTrue(true)
-                    }
+        uploadStoryRepository.uploadStory(dummyToken, "text", "", "",dummyMultipart).collect { result ->
+            Assert.assertNotNull(result.data)
+            Assert.assertEquals(expectedResponse, result.data)
+        }
 
-                    is NetworkResult.Error -> {}
-                }
-            }
-
-        Mockito.verify(uploadStorySource)
-            .uploadStory(
+        Mockito.verify(uploadStorySource).uploadStory(
                 "Bearer $dummyToken",
                 "text",
                 "",
@@ -72,8 +64,7 @@ class UploadStoryRepositoryTest {
     @Test
     fun `Upload image file - throw exception`() = runTest {
 
-        Mockito.`when`(
-            uploadStorySource.uploadStory(
+        Mockito.`when`(uploadStorySource.uploadStory(
                 "Bearer $dummyToken",
                 dummyDescription,
                 "",
@@ -82,19 +73,9 @@ class UploadStoryRepositoryTest {
             )
         ).then { throw Exception() }
 
-        uploadStoryRepository.uploadStory(dummyToken, dummyDescription, "", "",dummyMultipart)
-            .collect { result ->
-                when(result) {
-                    is NetworkResult.Success -> {
-                        Assert.assertTrue(false)
-                        Assert.assertFalse(result.data!!.error)
-                    }
-
-                    is NetworkResult.Error -> {
-                        Assert.assertNotNull(result.message)
-                    }
-                }
-            }
+        uploadStoryRepository.uploadStory(dummyToken, dummyDescription, "", "",dummyMultipart).collect { result ->
+            Assert.assertNotNull(result.message)
+        }
 
         Mockito.verify(uploadStorySource).uploadStory(
             "Bearer $dummyToken",

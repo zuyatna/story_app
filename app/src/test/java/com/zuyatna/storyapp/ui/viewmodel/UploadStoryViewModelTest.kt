@@ -21,11 +21,12 @@ import org.mockito.junit.MockitoJUnitRunner
 @ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
 class UploadStoryViewModelTest {
+
+    private lateinit var uploadStoryViewModel: UploadStoryViewModel
+
     @Mock
     private lateinit var uploadStoryRepository: UploadStoryRepository
 
-    @Mock
-    private lateinit var uploadStoryViewModel: UploadStoryViewModel
     private val dummyToken = DataDummy.generateDummyToken()
     private val dummyUploadResponse = DataDummy.generateDummyFileUploadResponse()
     private val dummyMultipart = DataDummy.generateDummyMultipartFile()
@@ -40,8 +41,7 @@ class UploadStoryViewModelTest {
     fun `Upload file successfully`() = runTest {
         val expectedResponse = flowOf(NetworkResult.Success(dummyUploadResponse))
 
-        Mockito.`when`(
-            uploadStoryViewModel.uploadStory(
+        Mockito.`when`(uploadStoryRepository.uploadStory(
                 dummyToken,
                 dummyDescription,
                 "",
@@ -50,17 +50,9 @@ class UploadStoryViewModelTest {
             )
         ).thenReturn(expectedResponse)
 
-        uploadStoryRepository.uploadStory(dummyToken, dummyDescription, "", "", dummyMultipart)
-            .collect { result ->
-                when(result){
-                    is NetworkResult.Success -> {
-                        Assert.assertNotNull(result.data)
-                        Assert.assertTrue(true)
-                        Assert.assertSame(dummyUploadResponse, result.data)
-                    }
-
-                    is NetworkResult.Error -> Assert.assertFalse(result.data!!.error)
-                }
+        uploadStoryViewModel.uploadStory(dummyToken, dummyDescription, "", "", dummyMultipart).collect { result ->
+                Assert.assertNotNull(result.data)
+                Assert.assertSame(dummyUploadResponse, result.data)
             }
 
         Mockito.verify(uploadStoryRepository).uploadStory(dummyToken, dummyDescription, "", "", dummyMultipart)
@@ -71,7 +63,7 @@ class UploadStoryViewModelTest {
         val expectedResponse : Flow<NetworkResult<UploadStoryResponse>> = flowOf(NetworkResult.Error("failed"))
 
         Mockito.`when`(
-            uploadStoryViewModel.uploadStory(
+            uploadStoryRepository.uploadStory(
                 dummyToken,
                 dummyDescription,
                 "",
@@ -80,19 +72,9 @@ class UploadStoryViewModelTest {
             )
         ).thenReturn(expectedResponse)
 
-        uploadStoryRepository.uploadStory(dummyToken, dummyDescription, "", "", dummyMultipart)
-            .collect { result ->
-                when(result){
-                    is NetworkResult.Success -> {
-                        Assert.assertTrue(false)
-                        Assert.assertFalse(result.data!!.error)
-                    }
-
-                    is NetworkResult.Error -> {
-                        Assert.assertNotNull(result.message)
-                    }
-                }
-            }
+        uploadStoryViewModel.uploadStory(dummyToken, dummyDescription, "", "", dummyMultipart).collect { result ->
+                Assert.assertNotNull(result.message)
+        }
 
         Mockito.verify(uploadStoryRepository).uploadStory(dummyToken, dummyDescription, "", "", dummyMultipart)
     }

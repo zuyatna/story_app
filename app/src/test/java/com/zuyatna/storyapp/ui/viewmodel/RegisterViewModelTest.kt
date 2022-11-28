@@ -24,9 +24,11 @@ class RegisterViewModelTest {
     @get:Rule
     var coroutinesTestRule = CoroutinesTestRule()
 
+    private lateinit var registerViewModel: RegisterViewModel
+
     @Mock
     private lateinit var registerRepository: RegisterRepository
-    private lateinit var registerViewModel: RegisterViewModel
+
     private val dummyRegisterResponse = DataDummy.generateDummyRegisterResponse()
     private val dummyName = "Antasuy22"
     private val dummyEmail = "antasuy22@mail.com"
@@ -41,22 +43,13 @@ class RegisterViewModelTest {
     fun `Register is successfully - NetworkResult Success`(): Unit = runTest {
         val expectedResponse = flowOf(NetworkResult.Success(dummyRegisterResponse))
 
-        Mockito.`when`(registerViewModel.register(dummyName, dummyEmail, dummyPassword)).thenReturn(expectedResponse)
+        Mockito.`when`(registerRepository.register(dummyName, dummyEmail, dummyPassword)).thenReturn(expectedResponse)
 
         registerViewModel.register(dummyName, dummyEmail, dummyPassword).collect { result ->
-            when(result) {
-                is NetworkResult.Success -> {
-                    Assert.assertTrue(true)
-                    Assert.assertNotNull(result.data)
-                    Assert.assertSame(result.data, dummyRegisterResponse)
-
-                }
-
-                is NetworkResult.Error -> {
-                    Assert.assertFalse(result.data!!.error)
-                }
-            }
+            Assert.assertNotNull(result.data)
+            Assert.assertSame(result.data, dummyRegisterResponse)
         }
+
         Mockito.verify(registerRepository).register(dummyName, dummyEmail, dummyPassword)
     }
 
@@ -64,19 +57,10 @@ class RegisterViewModelTest {
     fun `Register is Failed - NetworkResult Failed`(): Unit = runTest {
         val expectedResponse : Flow<NetworkResult<RegisterResponse>> = flowOf(NetworkResult.Error("failed"))
 
-        Mockito.`when`(registerViewModel.register(dummyName,dummyEmail, dummyPassword)).thenReturn(expectedResponse)
+        Mockito.`when`(registerRepository.register(dummyName,dummyEmail, dummyPassword)).thenReturn(expectedResponse)
 
         registerViewModel.register(dummyName, dummyEmail, dummyPassword).collect { result ->
-            when(result) {
-                is NetworkResult.Success -> {
-                    Assert.assertTrue(false)
-                    Assert.assertFalse(result.data!!.error)
-                }
-
-                is NetworkResult.Error -> {
-                    Assert.assertNotNull(result.message)
-                }
-            }
+            Assert.assertNotNull(result.message)
         }
 
         Mockito.verify(registerRepository).register(dummyName,dummyEmail, dummyPassword)
