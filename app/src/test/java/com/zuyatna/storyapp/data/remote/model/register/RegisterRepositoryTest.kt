@@ -39,22 +39,11 @@ class RegisterRepositoryTest {
     fun `Register successfully`(): Unit = runTest {
         val expectedResponse = DataDummy.generateDummyRegisterResponse()
 
-        Mockito.`when`(registerSource.register(dummyName, dummyEmail, dummyPassword))
-            .thenReturn(Response.success(expectedResponse))
+        Mockito.`when`(registerSource.register(dummyName, dummyEmail, dummyPassword)).thenReturn(Response.success(expectedResponse))
 
         registerRepository.register(dummyName, dummyEmail, dummyPassword).collect { result ->
-
-            when(result) {
-                is NetworkResult.Success -> {
-                    Assert.assertTrue(true)
-                    Assert.assertNotNull(result.data)
-                    assertEquals(expectedResponse, result.data)
-                }
-                is NetworkResult.Error -> {
-                    Assert.assertFalse(result.data!!.error)
-                    Assert.assertNull(result)
-                }
-            }
+            Assert.assertNotNull(result.data)
+            assertEquals(expectedResponse, result.data)
         }
     }
 
@@ -65,15 +54,7 @@ class RegisterRepositoryTest {
         ).then { throw Exception() }
 
         registerRepository.register(dummyName, dummyEmail, dummyPassword).collect { result ->
-            when(result) {
-                is NetworkResult.Success -> {
-                    Assert.assertTrue(false)
-                    Assert.assertFalse(result.data!!.error)
-                }
-                is NetworkResult.Error -> {
-                    Assert.assertNotNull(result.message)
-                }
-            }
+            Assert.assertNotNull(result.message)
         }
     }
 }

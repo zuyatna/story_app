@@ -41,37 +41,17 @@ class LoginRepositoryTest {
         Mockito.`when`(loginSource.login(dummyEmail, dummyPassword)).thenReturn(Response.success(expectedResponse))
 
         loginRepository.login(dummyEmail, dummyPassword).collect { result ->
-
-            when(result) {
-                is NetworkResult.Success -> {
-                    Assert.assertTrue(true)
-                    Assert.assertNotNull(result.data)
-                    assertEquals(expectedResponse, result.data)
-                }
-                is NetworkResult.Error -> {
-                    Assert.assertFalse(result.data!!.error)
-                    Assert.assertNull(result)
-                }
-            }
+            Assert.assertNotNull(result.data)
+            assertEquals(expectedResponse, result.data)
         }
     }
 
     @Test
     fun `Login Failed`(): Unit = runTest {
-        Mockito.`when`(
-            loginSource.login(dummyEmail, dummyPassword)
-        ).then { throw Exception() }
+        Mockito.`when`(loginSource.login(dummyEmail, dummyPassword)).then { throw Exception() }
 
         loginRepository.login(dummyEmail, dummyPassword).collect { result ->
-            when(result) {
-                is NetworkResult.Success -> {
-                    Assert.assertTrue(false)
-                    Assert.assertFalse(result.data!!.error)
-                }
-                is NetworkResult.Error -> {
-                    Assert.assertNotNull(result.message)
-                }
-            }
+            Assert.assertNotNull(result.message)
         }
     }
 }

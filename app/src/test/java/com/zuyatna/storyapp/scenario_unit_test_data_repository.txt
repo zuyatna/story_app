@@ -1,23 +1,35 @@
 [Test Data Repository]
-1. Test method Login and Register
+1. Test method Login
 1.1 Success
-    a. Make sure that the login & register is success, when take an action
-    b. Make sure that the data not null
-    c. Make sure there are have equality data response between data dummy and the server source
-    d. Make sure that the login & register method can be called
+    a. memastikan mengembalikan result.success
+    b. memastikan data tidak null
+    c. memastikan kesamaan response antara data dummy dan data asli
+    d. memastika method login dapat terpanggil
 
 1.2 Error
-    a. Make sure that the login & register method is failed, when take an action
-    b. Make sure that the data is null, when in the failed condition
-    c. Make sure that the login & register method can be called
+    a. memastikan mengembalikan result.error dengan parameter "failed"
+    b. memastikan message tidak null
+    c. memastika method login dapat terpanggil
 
-2. Test method UploadStoryViewModel
+2. Test method Register
 2.1 Success
-    a. Make sure that the user success to upload the file
-    b. Make sure that the data is not null
-    c. Make sure there are have equality data response between data dummy and the server source
-    d. Make sure that uploadStory method can be called
+    a. memastikan mengembalikan result.success
+    b. memastikan data tidak null
+    c. memastikan kesamaan response antara data dummy dan data asli
+    d. memastika method register dapat terpanggil
 
 2.2 Error
-    a. Make sure that the user failed to upload the file
-    b. Make sure the data response is not equal from the server source
+    a. memastikan mengembalikan result.error dengan parameter "failed"
+    b. memastikan message tidak null
+    c. memastika method register dapat terpanggil
+
+3. Test method UploadStoryViewModel
+3.1 Success
+    a. memastikan mengembalikan result.success
+    b. memastikan data tidak null
+    c. memastikan kesamaan response antara data dummy dan data asli
+    d. memastika method uploadStory dapat terpanggil
+
+3.2 Error
+    a. memastikan mengembalikan result.error / throw exception
+    b. memastikan message tidak null

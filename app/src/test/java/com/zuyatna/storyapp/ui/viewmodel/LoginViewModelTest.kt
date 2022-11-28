@@ -24,13 +24,14 @@ class LoginViewModelTest {
     @get:Rule
     var coroutinesTestRule = CoroutinesTestRule()
 
-    @Mock
-    private lateinit var loginRepository: LoginRepository
     private lateinit var loginViewModel: LoginViewModel
 
+    @Mock
+    private lateinit var loginRepository: LoginRepository
+
     private val dummyLoginResponse = DataDummy.generateDummyLoginResponse()
-    private val dummyEmail = "sam@mail.com"
-    private val dummyPassword = "123456"
+    private val dummyEmail = "antasuy22@gmail.com"
+    private val dummyPassword = "antasuy22"
 
     @Before
     fun setup() {
@@ -41,22 +42,13 @@ class LoginViewModelTest {
     fun `Login is successfully - NetworkResult Success`(): Unit = runTest {
         val expectedResponse = flowOf(NetworkResult.Success(dummyLoginResponse))
 
-        Mockito.`when`(loginViewModel.login(dummyEmail, dummyPassword)).thenReturn(expectedResponse)
+        Mockito.`when`(loginRepository.login(dummyEmail, dummyPassword)).thenReturn(expectedResponse)
 
         loginViewModel.login(dummyEmail, dummyPassword).collect { result ->
-            when(result) {
-                is NetworkResult.Success -> {
-                    Assert.assertTrue(true)
-                    Assert.assertNotNull(result.data)
-                    Assert.assertSame(result.data, dummyLoginResponse)
-
-                }
-
-                is NetworkResult.Error -> {
-                    Assert.assertFalse(result.data!!.error)
-                }
-            }
+            Assert.assertNotNull(result.data)
+            Assert.assertSame(result.data, dummyLoginResponse)
         }
+
         Mockito.verify(loginRepository).login(dummyEmail, dummyPassword)
     }
 
@@ -64,19 +56,10 @@ class LoginViewModelTest {
     fun `Login is Failed - NetworkResult Failed`(): Unit = runTest {
         val expectedResponse : Flow<NetworkResult<LoginResponse>> = flowOf(NetworkResult.Error("failed"))
 
-        Mockito.`when`(loginViewModel.login(dummyEmail, dummyPassword)).thenReturn(expectedResponse)
+        Mockito.`when`(loginRepository.login(dummyEmail, dummyPassword)).thenReturn(expectedResponse)
 
         loginViewModel.login(dummyEmail, dummyPassword).collect { result ->
-            when(result) {
-                is NetworkResult.Success -> {
-                    Assert.assertTrue(false)
-                    Assert.assertFalse(result.data!!.error)
-                }
-
-                is NetworkResult.Error -> {
-                    Assert.assertNotNull(result.message)
-                }
-            }
+            Assert.assertNotNull(result.message)
         }
 
         Mockito.verify(loginRepository).login(dummyEmail, dummyPassword)

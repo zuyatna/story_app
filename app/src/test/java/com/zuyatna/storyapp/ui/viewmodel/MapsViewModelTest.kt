@@ -21,9 +21,12 @@ import org.mockito.junit.MockitoJUnitRunner
 @ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
 class MapsViewModelTest {
+
+    private lateinit var mapsViewModel: MapsViewModel
+
     @Mock
     private lateinit var mapsRepository: MapsRepository
-    private lateinit var mapsViewModel: MapsViewModel
+
     private val dummyStoriesResponse = DataDummy.generateDummyStoriesResponse()
     private val dummyToken = DataDummy.generateDummyToken()
 
@@ -36,21 +39,11 @@ class MapsViewModelTest {
     fun `Get location story is successfully - NetworkResult Success`(): Unit = runTest {
         val expectedResponse = flowOf(NetworkResult.Success(dummyStoriesResponse))
 
-        Mockito.`when`(mapsViewModel.getStoriesLocation(dummyToken)).thenReturn(expectedResponse)
+        Mockito.`when`(mapsRepository.getStoriesLocation(dummyToken)).thenReturn(expectedResponse)
 
         mapsViewModel.getStoriesLocation(dummyToken).collect { result ->
-            when(result) {
-                is NetworkResult.Success -> {
-                    Assert.assertTrue(true)
-                    Assert.assertNotNull(result.data)
-                    Assert.assertSame(result.data, dummyStoriesResponse)
-
-                }
-
-                is NetworkResult.Error -> {
-                    Assert.assertFalse(result.data!!.error)
-                }
-            }
+            Assert.assertNotNull(result.data)
+            Assert.assertSame(result.data, dummyStoriesResponse)
         }
 
         Mockito.verify(mapsRepository).getStoriesLocation(dummyToken)
@@ -60,19 +53,10 @@ class MapsViewModelTest {
     fun `Get location story is failed - NetworkResult Error`(): Unit = runTest {
         val expectedResponse : Flow<NetworkResult<MainResponse>> = flowOf(NetworkResult.Error("failed"))
 
-        Mockito.`when`(mapsViewModel.getStoriesLocation(dummyToken)).thenReturn(expectedResponse)
+        Mockito.`when`(mapsRepository.getStoriesLocation(dummyToken)).thenReturn(expectedResponse)
 
         mapsViewModel.getStoriesLocation(dummyToken).collect { result ->
-            when(result) {
-                is NetworkResult.Success -> {
-                    Assert.assertTrue(false)
-                    Assert.assertFalse(result.data!!.error)
-                }
-
-                is NetworkResult.Error -> {
-                    Assert.assertNotNull(result.message)
-                }
-            }
+            Assert.assertNotNull(result.message)
         }
 
         Mockito.verify(mapsRepository).getStoriesLocation(dummyToken)
